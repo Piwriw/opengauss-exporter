@@ -85,7 +85,7 @@ type filesystemStats struct {
 }
 
 func init() {
-	registerCollector("filesystem", defaultEnabled, NewFilesystemCollector)
+	RegisterCollector("filesystem", DefaultEnabled, NewFilesystemCollector)
 }
 
 // NewFilesystemCollector returns a new Collector exposing filesystems stats.
@@ -115,49 +115,49 @@ func NewFilesystemCollector(logger log.Logger) (Collector, error) {
 	filesystemsTypesPattern := regexp.MustCompile(*fsTypesExclude)
 
 	sizeDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "size_bytes"),
+		prometheus.BuildFQName(Namespace, subsystem, "size_bytes"),
 		"Filesystem size in bytes.",
 		filesystemLabelNames, nil,
 	)
 
 	freeDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "free_bytes"),
+		prometheus.BuildFQName(Namespace, subsystem, "free_bytes"),
 		"Filesystem free space in bytes.",
 		filesystemLabelNames, nil,
 	)
 
 	availDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "avail_bytes"),
+		prometheus.BuildFQName(Namespace, subsystem, "avail_bytes"),
 		"Filesystem space available to non-root users in bytes.",
 		filesystemLabelNames, nil,
 	)
 
 	filesDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "files"),
+		prometheus.BuildFQName(Namespace, subsystem, "files"),
 		"Filesystem total file nodes.",
 		filesystemLabelNames, nil,
 	)
 
 	filesFreeDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "files_free"),
+		prometheus.BuildFQName(Namespace, subsystem, "files_free"),
 		"Filesystem total free file nodes.",
 		filesystemLabelNames, nil,
 	)
 
 	roDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "readonly"),
+		prometheus.BuildFQName(Namespace, subsystem, "readonly"),
 		"Filesystem read-only status.",
 		filesystemLabelNames, nil,
 	)
 
 	deviceErrorDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "device_error"),
+		prometheus.BuildFQName(Namespace, subsystem, "device_error"),
 		"Whether an error occurred while getting statistics for the given device.",
 		filesystemLabelNames, nil,
 	)
 
 	mountInfoDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "mount_info"),
+		prometheus.BuildFQName(Namespace, subsystem, "mount_info"),
 		"Filesystem mount information.",
 		[]string{"device", "major", "minor", "mountpoint"},
 		nil,

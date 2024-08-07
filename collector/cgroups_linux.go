@@ -34,7 +34,7 @@ type cgroupSummaryCollector struct {
 }
 
 func init() {
-	registerCollector(cgroupsCollectorSubsystem, defaultDisabled, NewCgroupSummaryCollector)
+	RegisterCollector(cgroupsCollectorSubsystem, DefaultDisabled, NewCgroupSummaryCollector)
 }
 
 // NewCgroupSummaryCollector returns a new Collector exposing a summary of cgroups.
@@ -46,12 +46,12 @@ func NewCgroupSummaryCollector(logger log.Logger) (Collector, error) {
 	return &cgroupSummaryCollector{
 		fs: fs,
 		cgroups: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cgroupsCollectorSubsystem, "cgroups"),
+			prometheus.BuildFQName(Namespace, cgroupsCollectorSubsystem, "cgroups"),
 			"Current cgroup number of the subsystem.",
 			[]string{"subsys_name"}, nil,
 		),
 		enabled: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cgroupsCollectorSubsystem, "enabled"),
+			prometheus.BuildFQName(Namespace, cgroupsCollectorSubsystem, "enabled"),
 			"Current cgroup number of the subsystem.",
 			[]string{"subsys_name"}, nil,
 		),

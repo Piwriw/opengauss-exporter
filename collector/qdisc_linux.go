@@ -50,7 +50,7 @@ var (
 )
 
 func init() {
-	registerCollector("qdisc", defaultDisabled, NewQdiscStatCollector)
+	RegisterCollector("qdisc", DefaultDisabled, NewQdiscStatCollector)
 }
 
 // NewQdiscStatCollector returns a new Collector exposing queuing discipline statistics.
@@ -79,37 +79,37 @@ func NewQdiscStatCollector(logger log.Logger) (Collector, error) {
 
 	return &qdiscStatCollector{
 		bytes: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "qdisc", "bytes_total"),
+			prometheus.BuildFQName(Namespace, "qdisc", "bytes_total"),
 			"Number of bytes sent.",
 			[]string{"device", "kind"}, nil,
 		), prometheus.CounterValue},
 		packets: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "qdisc", "packets_total"),
+			prometheus.BuildFQName(Namespace, "qdisc", "packets_total"),
 			"Number of packets sent.",
 			[]string{"device", "kind"}, nil,
 		), prometheus.CounterValue},
 		drops: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "qdisc", "drops_total"),
+			prometheus.BuildFQName(Namespace, "qdisc", "drops_total"),
 			"Number of packets dropped.",
 			[]string{"device", "kind"}, nil,
 		), prometheus.CounterValue},
 		requeues: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "qdisc", "requeues_total"),
+			prometheus.BuildFQName(Namespace, "qdisc", "requeues_total"),
 			"Number of packets dequeued, not transmitted, and requeued.",
 			[]string{"device", "kind"}, nil,
 		), prometheus.CounterValue},
 		overlimits: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "qdisc", "overlimits_total"),
+			prometheus.BuildFQName(Namespace, "qdisc", "overlimits_total"),
 			"Number of overlimit packets.",
 			[]string{"device", "kind"}, nil,
 		), prometheus.CounterValue},
 		qlength: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "qdisc", "current_queue_length"),
+			prometheus.BuildFQName(Namespace, "qdisc", "current_queue_length"),
 			"Number of packets currently in queue to be sent.",
 			[]string{"device", "kind"}, nil,
 		), prometheus.GaugeValue},
 		backlog: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "qdisc", "backlog"),
+			prometheus.BuildFQName(Namespace, "qdisc", "backlog"),
 			"Number of bytes currently in queue to be sent.",
 			[]string{"device", "kind"}, nil,
 		), prometheus.GaugeValue},

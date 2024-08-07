@@ -32,7 +32,7 @@ type entropyCollector struct {
 }
 
 func init() {
-	registerCollector("entropy", defaultEnabled, NewEntropyCollector)
+	RegisterCollector("entropy", DefaultEnabled, NewEntropyCollector)
 }
 
 // NewEntropyCollector returns a new Collector exposing entropy stats.
@@ -45,12 +45,12 @@ func NewEntropyCollector(logger log.Logger) (Collector, error) {
 	return &entropyCollector{
 		fs: fs,
 		entropyAvail: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "entropy_available_bits"),
+			prometheus.BuildFQName(Namespace, "", "entropy_available_bits"),
 			"Bits of available entropy.",
 			nil, nil,
 		),
 		entropyPoolSize: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "entropy_pool_size_bits"),
+			prometheus.BuildFQName(Namespace, "", "entropy_pool_size_bits"),
 			"Bits of entropy pool.",
 			nil, nil,
 		),

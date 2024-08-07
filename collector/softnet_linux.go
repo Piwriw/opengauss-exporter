@@ -42,7 +42,7 @@ const (
 )
 
 func init() {
-	registerCollector("softnet", defaultEnabled, NewSoftnetCollector)
+	RegisterCollector("softnet", DefaultEnabled, NewSoftnetCollector)
 }
 
 // NewSoftnetCollector returns a new Collector exposing softnet metrics.
@@ -55,37 +55,37 @@ func NewSoftnetCollector(logger log.Logger) (Collector, error) {
 	return &softnetCollector{
 		fs: fs,
 		processed: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, softnetSubsystem, "processed_total"),
+			prometheus.BuildFQName(Namespace, softnetSubsystem, "processed_total"),
 			"Number of processed packets",
 			[]string{"cpu"}, nil,
 		),
 		dropped: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, softnetSubsystem, "dropped_total"),
+			prometheus.BuildFQName(Namespace, softnetSubsystem, "dropped_total"),
 			"Number of dropped packets",
 			[]string{"cpu"}, nil,
 		),
 		timeSqueezed: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, softnetSubsystem, "times_squeezed_total"),
+			prometheus.BuildFQName(Namespace, softnetSubsystem, "times_squeezed_total"),
 			"Number of times processing packets ran out of quota",
 			[]string{"cpu"}, nil,
 		),
 		cpuCollision: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, softnetSubsystem, "cpu_collision_total"),
+			prometheus.BuildFQName(Namespace, softnetSubsystem, "cpu_collision_total"),
 			"Number of collision occur while obtaining device lock while transmitting",
 			[]string{"cpu"}, nil,
 		),
 		receivedRps: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, softnetSubsystem, "received_rps_total"),
+			prometheus.BuildFQName(Namespace, softnetSubsystem, "received_rps_total"),
 			"Number of times cpu woken up received_rps",
 			[]string{"cpu"}, nil,
 		),
 		flowLimitCount: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, softnetSubsystem, "flow_limit_count_total"),
+			prometheus.BuildFQName(Namespace, softnetSubsystem, "flow_limit_count_total"),
 			"Number of times flow limit has been reached",
 			[]string{"cpu"}, nil,
 		),
 		softnetBacklogLen: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, softnetSubsystem, "backlog_len"),
+			prometheus.BuildFQName(Namespace, softnetSubsystem, "backlog_len"),
 			"Softnet backlog status",
 			[]string{"cpu"}, nil,
 		),

@@ -30,7 +30,7 @@ type xfrmCollector struct {
 }
 
 func init() {
-	registerCollector("xfrm", defaultDisabled, NewXfrmCollector)
+	RegisterCollector("xfrm", DefaultDisabled, NewXfrmCollector)
 }
 
 // NewXfrmCollector returns a new Collector exposing XFRM stats.
@@ -48,142 +48,142 @@ func NewXfrmCollector(logger log.Logger) (Collector, error) {
 
 var (
 	xfrmInErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_error_packets_total"),
 		"All errors not matched by other",
 		nil, nil,
 	)
 	xfrmInBufferErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_buffer_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_buffer_error_packets_total"),
 		"No buffer is left",
 		nil, nil,
 	)
 	xfrmInHdrErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_hdr_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_hdr_error_packets_total"),
 		"Header error",
 		nil, nil,
 	)
 	xfrmInNoStatesDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_no_states_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_no_states_packets_total"),
 		"No state is found i.e. Either inbound SPI, address, or IPsec protocol at SA is wrong",
 		nil, nil,
 	)
 	xfrmInStateProtoErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_state_proto_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_state_proto_error_packets_total"),
 		"Transformation protocol specific error e.g. SA key is wrong",
 		nil, nil,
 	)
 	xfrmInStateModeErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_state_mode_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_state_mode_error_packets_total"),
 		"Transformation mode specific error",
 		nil, nil,
 	)
 	xfrmInStateSeqErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_state_seq_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_state_seq_error_packets_total"),
 		"Sequence error i.e. Sequence number is out of window",
 		nil, nil,
 	)
 	xfrmInStateExpiredDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_state_expired_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_state_expired_packets_total"),
 		"State is expired",
 		nil, nil,
 	)
 	xfrmInStateMismatchDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_state_mismatch_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_state_mismatch_packets_total"),
 		"State has mismatch option e.g. UDP encapsulation type is mismatch",
 		nil, nil,
 	)
 	xfrmInStateInvalidDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_state_invalid_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_state_invalid_packets_total"),
 		"State is invalid",
 		nil, nil,
 	)
 	xfrmInTmplMismatchDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_tmpl_mismatch_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_tmpl_mismatch_packets_total"),
 		"No matching template for states e.g. Inbound SAs are correct but SP rule is wrong",
 		nil, nil,
 	)
 	xfrmInNoPolsDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_no_pols_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_no_pols_packets_total"),
 		"No policy is found for states e.g. Inbound SAs are correct but no SP is found",
 		nil, nil,
 	)
 	xfrmInPolBlockDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_pol_block_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_pol_block_packets_total"),
 		"Policy discards",
 		nil, nil,
 	)
 	xfrmInPolErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "in_pol_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "in_pol_error_packets_total"),
 		"Policy error",
 		nil, nil,
 	)
 	xfrmOutErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_error_packets_total"),
 		"All errors which is not matched others",
 		nil, nil,
 	)
 	xfrmOutBundleGenErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_bundle_gen_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_bundle_gen_error_packets_total"),
 		"Bundle generation error",
 		nil, nil,
 	)
 	xfrmOutBundleCheckErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_bundle_check_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_bundle_check_error_packets_total"),
 		"Bundle check error",
 		nil, nil,
 	)
 	xfrmOutNoStatesDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_no_states_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_no_states_packets_total"),
 		"No state is found",
 		nil, nil,
 	)
 	xfrmOutStateProtoErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_state_proto_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_state_proto_error_packets_total"),
 		"Transformation protocol specific error",
 		nil, nil,
 	)
 	xfrmOutStateModeErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_state_mode_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_state_mode_error_packets_total"),
 		"Transformation mode specific error",
 		nil, nil,
 	)
 	xfrmOutStateSeqErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_state_seq_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_state_seq_error_packets_total"),
 		"Sequence error i.e. Sequence number overflow",
 		nil, nil,
 	)
 	xfrmOutStateExpiredDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_state_expired_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_state_expired_packets_total"),
 		"State is expired",
 		nil, nil,
 	)
 	xfrmOutPolBlockDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_pol_block_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_pol_block_packets_total"),
 		"Policy discards",
 		nil, nil,
 	)
 	xfrmOutPolDeadDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_pol_dead_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_pol_dead_packets_total"),
 		"Policy is dead",
 		nil, nil,
 	)
 	xfrmOutPolErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_pol_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_pol_error_packets_total"),
 		"Policy error",
 		nil, nil,
 	)
 	xfrmFwdHdrErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "fwd_hdr_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "fwd_hdr_error_packets_total"),
 		"Forward routing of a packet is not allowed",
 		nil, nil,
 	)
 	xfrmOutStateInvalidDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "out_state_invalid_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "out_state_invalid_packets_total"),
 		"State is invalid, perhaps expired",
 		nil, nil,
 	)
 	xfrmAcquireErrorDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "xfrm", "acquire_error_packets_total"),
+		prometheus.BuildFQName(Namespace, "xfrm", "acquire_error_packets_total"),
 		"State hasn’t been fully acquired before use",
 		nil, nil,
 	)

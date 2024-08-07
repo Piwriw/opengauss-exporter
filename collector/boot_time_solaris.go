@@ -28,14 +28,14 @@ type bootTimeCollector struct {
 }
 
 func init() {
-	registerCollector("boottime", defaultEnabled, newBootTimeCollector)
+	RegisterCollector("boottime", DefaultEnabled, newBootTimeCollector)
 }
 
 func newBootTimeCollector(logger log.Logger) (Collector, error) {
 	return &bootTimeCollector{
 		boottime: typedDesc{
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "", "boot_time_seconds"),
+				prometheus.BuildFQName(Namespace, "", "boot_time_seconds"),
 				"Unix time of last boot, including microseconds.",
 				nil, nil,
 			), prometheus.GaugeValue},

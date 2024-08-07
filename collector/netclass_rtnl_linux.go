@@ -81,7 +81,7 @@ func (c *netClassCollector) netClassRTNLUpdate(ch chan<- prometheus.Metric) erro
 	// Parse all the info and update metrics
 	for _, msg := range relevantLinks {
 		upDesc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, "up"),
+			prometheus.BuildFQName(Namespace, c.subsystem, "up"),
 			"Value is 1 if operstate is 'up', 0 otherwise.",
 			[]string{"device"},
 			nil,
@@ -93,7 +93,7 @@ func (c *netClassCollector) netClassRTNLUpdate(ch chan<- prometheus.Metric) erro
 		ch <- prometheus.MustNewConstMetric(upDesc, prometheus.GaugeValue, upValue, msg.Attributes.Name)
 
 		infoDesc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, "info"),
+			prometheus.BuildFQName(Namespace, c.subsystem, "info"),
 			"Non-numeric data of <iface>, value is always 1.",
 			[]string{"device", "address", "broadcast", "duplex", "operstate", "ifalias"},
 			nil,

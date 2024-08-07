@@ -90,7 +90,7 @@ type diskstatsCollector struct {
 }
 
 func init() {
-	registerCollector("diskstats", defaultEnabled, NewDiskstatsCollector)
+	RegisterCollector("diskstats", DefaultEnabled, NewDiskstatsCollector)
 }
 
 // NewDiskstatsCollector returns a new Collector exposing disk device stats.
@@ -111,7 +111,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 		deviceFilter: deviceFilter,
 		fs:           fs,
 		infoDesc: typedFactorDesc{
-			desc: prometheus.NewDesc(prometheus.BuildFQName(namespace, diskSubsystem, "info"),
+			desc: prometheus.NewDesc(prometheus.BuildFQName(Namespace, diskSubsystem, "info"),
 				"Info of /sys/block/<block_device>.",
 				[]string{"device", "major", "minor", "path", "wwn", "model", "serial", "revision"},
 				nil,
@@ -123,7 +123,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "reads_merged_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "reads_merged_total"),
 					"The total number of reads merged.",
 					diskLabelNames,
 					nil,
@@ -140,7 +140,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "writes_merged_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "writes_merged_total"),
 					"The number of writes merged.",
 					diskLabelNames,
 					nil,
@@ -154,7 +154,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "io_now"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "io_now"),
 					"The number of I/Os currently in progress.",
 					diskLabelNames,
 					nil,
@@ -165,7 +165,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "io_time_weighted_seconds_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "io_time_weighted_seconds_total"),
 					"The weighted # of seconds spent doing I/Os.",
 					diskLabelNames,
 					nil,
@@ -173,7 +173,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "discards_completed_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "discards_completed_total"),
 					"The total number of discards completed successfully.",
 					diskLabelNames,
 					nil,
@@ -181,7 +181,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "discards_merged_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "discards_merged_total"),
 					"The total number of discards merged.",
 					diskLabelNames,
 					nil,
@@ -189,7 +189,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "discarded_sectors_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "discarded_sectors_total"),
 					"The total number of sectors discarded successfully.",
 					diskLabelNames,
 					nil,
@@ -197,7 +197,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "discard_time_seconds_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "discard_time_seconds_total"),
 					"This is the total number of seconds spent by all discards.",
 					diskLabelNames,
 					nil,
@@ -205,7 +205,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "flush_requests_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "flush_requests_total"),
 					"The total number of flush requests completed successfully",
 					diskLabelNames,
 					nil,
@@ -213,7 +213,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 			{
 				desc: prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, diskSubsystem, "flush_requests_time_seconds_total"),
+					prometheus.BuildFQName(Namespace, diskSubsystem, "flush_requests_time_seconds_total"),
 					"This is the total number of seconds spent by all flush requests.",
 					diskLabelNames,
 					nil,
@@ -221,14 +221,14 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			},
 		},
 		filesystemInfoDesc: typedFactorDesc{
-			desc: prometheus.NewDesc(prometheus.BuildFQName(namespace, diskSubsystem, "filesystem_info"),
+			desc: prometheus.NewDesc(prometheus.BuildFQName(Namespace, diskSubsystem, "filesystem_info"),
 				"Info about disk filesystem.",
 				[]string{"device", "type", "usage", "uuid", "version"},
 				nil,
 			), valueType: prometheus.GaugeValue,
 		},
 		deviceMapperInfoDesc: typedFactorDesc{
-			desc: prometheus.NewDesc(prometheus.BuildFQName(namespace, diskSubsystem, "device_mapper_info"),
+			desc: prometheus.NewDesc(prometheus.BuildFQName(Namespace, diskSubsystem, "device_mapper_info"),
 				"Info about disk device mapper.",
 				[]string{"device", "name", "uuid", "vg_name", "lv_name", "lv_layer"},
 				nil,
@@ -236,21 +236,21 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 		},
 		ataDescs: map[string]typedFactorDesc{
 			udevIDATAWriteCache: {
-				desc: prometheus.NewDesc(prometheus.BuildFQName(namespace, diskSubsystem, "ata_write_cache"),
+				desc: prometheus.NewDesc(prometheus.BuildFQName(Namespace, diskSubsystem, "ata_write_cache"),
 					"ATA disk has a write cache.",
 					[]string{"device"},
 					nil,
 				), valueType: prometheus.GaugeValue,
 			},
 			udevIDATAWriteCacheEnabled: {
-				desc: prometheus.NewDesc(prometheus.BuildFQName(namespace, diskSubsystem, "ata_write_cache_enabled"),
+				desc: prometheus.NewDesc(prometheus.BuildFQName(Namespace, diskSubsystem, "ata_write_cache_enabled"),
 					"ATA disk has its write cache enabled.",
 					[]string{"device"},
 					nil,
 				), valueType: prometheus.GaugeValue,
 			},
 			udevIDATARotationRateRPM: {
-				desc: prometheus.NewDesc(prometheus.BuildFQName(namespace, diskSubsystem, "ata_rotation_rate_rpm"),
+				desc: prometheus.NewDesc(prometheus.BuildFQName(Namespace, diskSubsystem, "ata_rotation_rate_rpm"),
 					"ATA disk rotation rate in RPMs (0 for SSDs).",
 					[]string{"device"},
 					nil,

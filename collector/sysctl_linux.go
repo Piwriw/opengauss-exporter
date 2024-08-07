@@ -28,7 +28,7 @@ var (
 	sysctlInclude     = kingpin.Flag("collector.sysctl.include", "Select sysctl metrics to include").Strings()
 	sysctlIncludeInfo = kingpin.Flag("collector.sysctl.include-info", "Select sysctl metrics to include as info metrics").Strings()
 
-	sysctlInfoDesc = prometheus.NewDesc(prometheus.BuildFQName(namespace, "sysctl", "info"), "sysctl info", []string{"name", "value", "index"}, nil)
+	sysctlInfoDesc = prometheus.NewDesc(prometheus.BuildFQName(Namespace, "sysctl", "info"), "sysctl info", []string{"name", "value", "index"}, nil)
 )
 
 type sysctlCollector struct {
@@ -38,7 +38,7 @@ type sysctlCollector struct {
 }
 
 func init() {
-	registerCollector("sysctl", defaultDisabled, NewSysctlCollector)
+	RegisterCollector("sysctl", DefaultDisabled, NewSysctlCollector)
 }
 
 func NewSysctlCollector(logger log.Logger) (Collector, error) {
@@ -155,7 +155,7 @@ func (s *sysctl) newConstMetric(v interface{}) prometheus.Metric {
 	if s.numeric {
 		return prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "sysctl", s.metricName()),
+				prometheus.BuildFQName(Namespace, "sysctl", s.metricName()),
 				fmt.Sprintf("sysctl %s", s.name),
 				nil, nil),
 			prometheus.UntypedValue,
@@ -173,7 +173,7 @@ func (s *sysctl) newConstMetric(v interface{}) prometheus.Metric {
 
 func (s *sysctl) newIndexedMetrics(v interface{}) []prometheus.Metric {
 	desc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "sysctl", s.metricName()),
+		prometheus.BuildFQName(Namespace, "sysctl", s.metricName()),
 		fmt.Sprintf("sysctl %s", s.name),
 		[]string{"index"}, nil,
 	)
@@ -202,7 +202,7 @@ func (s *sysctl) newMappedMetrics(v interface{}) ([]prometheus.Metric, error) {
 		for i, n := range values {
 			key := s.keys[i]
 			desc := prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "sysctl", s.metricName()+"_"+key),
+				prometheus.BuildFQName(Namespace, "sysctl", s.metricName()+"_"+key),
 				fmt.Sprintf("sysctl %s, field %d", s.name, i),
 				nil,
 				nil,

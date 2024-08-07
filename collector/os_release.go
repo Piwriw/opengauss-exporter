@@ -78,7 +78,7 @@ type Dict struct {
 }
 
 func init() {
-	registerCollector("os", defaultEnabled, NewOSCollector)
+	RegisterCollector("os", DefaultEnabled, NewOSCollector)
 }
 
 // NewOSCollector returns a new Collector exposing os-release information.
@@ -86,7 +86,7 @@ func NewOSCollector(logger log.Logger) (Collector, error) {
 	return &osReleaseCollector{
 		logger: logger,
 		infoDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "os", "info"),
+			prometheus.BuildFQName(Namespace, "os", "info"),
 			"A metric with a constant '1' value labeled by build_id, id, id_like, image_id, image_version, "+
 				"name, pretty_name, variant, variant_id, version, version_codename, version_id.",
 			[]string{"build_id", "id", "id_like", "image_id", "image_version", "name", "pretty_name",
@@ -94,12 +94,12 @@ func NewOSCollector(logger log.Logger) (Collector, error) {
 		),
 		osReleaseFilenames: []string{etcOSRelease, usrLibOSRelease, systemVersionPlist},
 		versionDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "os", "version"),
+			prometheus.BuildFQName(Namespace, "os", "version"),
 			"Metric containing the major.minor part of the OS version.",
 			[]string{"id", "id_like", "name"}, nil,
 		),
 		supportEndDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "os", "support_end_timestamp_seconds"),
+			prometheus.BuildFQName(Namespace, "os", "support_end_timestamp_seconds"),
 			"Metric containing the end-of-life date timestamp of the OS.",
 			nil, nil,
 		),

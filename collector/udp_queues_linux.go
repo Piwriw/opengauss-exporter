@@ -36,7 +36,7 @@ type (
 )
 
 func init() {
-	registerCollector("udp_queues", defaultEnabled, NewUDPqueuesCollector)
+	RegisterCollector("udp_queues", DefaultEnabled, NewUDPqueuesCollector)
 }
 
 // NewUDPqueuesCollector returns a new Collector exposing network udp queued bytes.
@@ -48,7 +48,7 @@ func NewUDPqueuesCollector(logger log.Logger) (Collector, error) {
 	return &udpQueuesCollector{
 		fs: fs,
 		desc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "udp", "queues"),
+			prometheus.BuildFQName(Namespace, "udp", "queues"),
 			"Number of allocated memory in the kernel for UDP datagrams in bytes.",
 			[]string{"queue", "ip"}, nil,
 		),

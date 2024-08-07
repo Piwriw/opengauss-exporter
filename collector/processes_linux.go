@@ -43,7 +43,7 @@ type processCollector struct {
 }
 
 func init() {
-	registerCollector("processes", defaultDisabled, NewProcessStatCollector)
+	RegisterCollector("processes", DefaultDisabled, NewProcessStatCollector)
 }
 
 // NewProcessStatCollector returns a new Collector exposing process data read from the proc filesystem.
@@ -56,29 +56,29 @@ func NewProcessStatCollector(logger log.Logger) (Collector, error) {
 	return &processCollector{
 		fs: fs,
 		threadAlloc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "threads"),
+			prometheus.BuildFQName(Namespace, subsystem, "threads"),
 			"Allocated threads in system",
 			nil, nil,
 		),
 		threadLimit: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "max_threads"),
+			prometheus.BuildFQName(Namespace, subsystem, "max_threads"),
 			"Limit of threads in the system",
 			nil, nil,
 		),
 		threadsState: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "threads_state"),
+			prometheus.BuildFQName(Namespace, subsystem, "threads_state"),
 			"Number of threads in each state.",
 			[]string{"thread_state"}, nil,
 		),
 		procsState: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "state"),
+			prometheus.BuildFQName(Namespace, subsystem, "state"),
 			"Number of processes in each state.",
 			[]string{"state"}, nil,
 		),
-		pidUsed: prometheus.NewDesc(prometheus.BuildFQName(namespace, subsystem, "pids"),
+		pidUsed: prometheus.NewDesc(prometheus.BuildFQName(Namespace, subsystem, "pids"),
 			"Number of PIDs", nil, nil,
 		),
-		pidMax: prometheus.NewDesc(prometheus.BuildFQName(namespace, subsystem, "max_processes"),
+		pidMax: prometheus.NewDesc(prometheus.BuildFQName(Namespace, subsystem, "max_processes"),
 			"Number of max PIDs limit", nil, nil,
 		),
 		logger: logger,

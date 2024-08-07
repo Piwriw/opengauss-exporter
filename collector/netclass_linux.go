@@ -47,7 +47,7 @@ type netClassCollector struct {
 }
 
 func init() {
-	registerCollector("netclass", defaultEnabled, NewNetClassCollector)
+	RegisterCollector("netclass", DefaultEnabled, NewNetClassCollector)
 }
 
 // NewNetClassCollector returns a new Collector exposing network class stats.
@@ -84,7 +84,7 @@ func (c *netClassCollector) netClassSysfsUpdate(ch chan<- prometheus.Metric) err
 	}
 	for _, ifaceInfo := range netClass {
 		upDesc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, "up"),
+			prometheus.BuildFQName(Namespace, c.subsystem, "up"),
 			"Value is 1 if operstate is 'up', 0 otherwise.",
 			[]string{"device"},
 			nil,
@@ -97,7 +97,7 @@ func (c *netClassCollector) netClassSysfsUpdate(ch chan<- prometheus.Metric) err
 		ch <- prometheus.MustNewConstMetric(upDesc, prometheus.GaugeValue, upValue, ifaceInfo.Name)
 
 		infoDesc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, "info"),
+			prometheus.BuildFQName(Namespace, c.subsystem, "info"),
 			"Non-numeric data from /sys/class/net/<iface>, value is always 1.",
 			[]string{"device", "address", "broadcast", "duplex", "operstate", "adminstate", "ifalias"},
 			nil,
@@ -145,7 +145,7 @@ func (c *netClassCollector) getFieldDesc(name string) *prometheus.Desc {
 
 	if !exists {
 		fieldDesc = prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, name),
+			prometheus.BuildFQName(Namespace, c.subsystem, name),
 			fmt.Sprintf("Network device property: %s", name),
 			[]string{"device"},
 			nil,

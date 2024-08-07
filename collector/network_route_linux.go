@@ -34,7 +34,7 @@ type networkRouteCollector struct {
 }
 
 func init() {
-	registerCollector("network_route", defaultDisabled, NewNetworkRouteCollector)
+	RegisterCollector("network_route", DefaultDisabled, NewNetworkRouteCollector)
 }
 
 // NewNetworkRouteCollector returns a new Collector exposing systemd statistics.
@@ -42,11 +42,11 @@ func NewNetworkRouteCollector(logger log.Logger) (Collector, error) {
 	const subsystem = "network"
 
 	routeInfoDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "route_info"),
+		prometheus.BuildFQName(Namespace, subsystem, "route_info"),
 		"network routing table information", []string{"device", "src", "dest", "gw", "priority", "proto", "weight"}, nil,
 	)
 	routesDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, "routes"),
+		prometheus.BuildFQName(Namespace, subsystem, "routes"),
 		"network routes by interface", []string{"device"}, nil,
 	)
 

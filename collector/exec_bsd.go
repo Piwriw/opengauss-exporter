@@ -28,7 +28,7 @@ type execCollector struct {
 }
 
 func init() {
-	registerCollector("exec", defaultEnabled, NewExecCollector)
+	RegisterCollector("exec", DefaultEnabled, NewExecCollector)
 }
 
 // NewExecCollector returns a new Collector exposing system execution statistics.
@@ -90,7 +90,7 @@ func (c *execCollector) Update(ch chan<- prometheus.Metric) error {
 
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				namespace+"_"+m.name,
+				Namespace+"_"+m.name,
 				m.description,
 				nil, nil,
 			), prometheus.CounterValue, v)

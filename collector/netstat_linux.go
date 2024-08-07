@@ -45,7 +45,7 @@ type netStatCollector struct {
 }
 
 func init() {
-	registerCollector("netstat", defaultEnabled, NewNetStatCollector)
+	RegisterCollector("netstat", DefaultEnabled, NewNetStatCollector)
 }
 
 // NewNetStatCollector takes and returns
@@ -91,7 +91,7 @@ func (c *netStatCollector) Update(ch chan<- prometheus.Metric) error {
 			}
 			ch <- prometheus.MustNewConstMetric(
 				prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, netStatsSubsystem, key),
+					prometheus.BuildFQName(Namespace, netStatsSubsystem, key),
 					fmt.Sprintf("Statistic %s.", protocol+name),
 					nil, nil,
 				),

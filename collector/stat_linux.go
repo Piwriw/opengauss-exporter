@@ -40,7 +40,7 @@ type statCollector struct {
 var statSoftirqFlag = kingpin.Flag("collector.stat.softirq", "Export softirq calls per vector").Default("false").Bool()
 
 func init() {
-	registerCollector("stat", defaultEnabled, NewStatCollector)
+	RegisterCollector("stat", DefaultEnabled, NewStatCollector)
 }
 
 // NewStatCollector returns a new Collector exposing kernel/system statistics.
@@ -52,37 +52,37 @@ func NewStatCollector(logger log.Logger) (Collector, error) {
 	return &statCollector{
 		fs: fs,
 		intr: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "intr_total"),
+			prometheus.BuildFQName(Namespace, "", "intr_total"),
 			"Total number of interrupts serviced.",
 			nil, nil,
 		),
 		ctxt: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "context_switches_total"),
+			prometheus.BuildFQName(Namespace, "", "context_switches_total"),
 			"Total number of context switches.",
 			nil, nil,
 		),
 		forks: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "forks_total"),
+			prometheus.BuildFQName(Namespace, "", "forks_total"),
 			"Total number of forks.",
 			nil, nil,
 		),
 		btime: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "boot_time_seconds"),
+			prometheus.BuildFQName(Namespace, "", "boot_time_seconds"),
 			"Node boot time, in unixtime.",
 			nil, nil,
 		),
 		procsRunning: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "procs_running"),
+			prometheus.BuildFQName(Namespace, "", "procs_running"),
 			"Number of processes in runnable state.",
 			nil, nil,
 		),
 		procsBlocked: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "procs_blocked"),
+			prometheus.BuildFQName(Namespace, "", "procs_blocked"),
 			"Number of processes blocked waiting for I/O to complete.",
 			nil, nil,
 		),
 		softIRQ: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "softirqs_total"),
+			prometheus.BuildFQName(Namespace, "", "softirqs_total"),
 			"Number of softirq calls.",
 			[]string{"vector"}, nil,
 		),

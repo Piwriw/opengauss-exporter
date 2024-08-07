@@ -66,7 +66,7 @@ var (
 )
 
 func init() {
-	registerCollector("cpu", defaultEnabled, NewCPUCollector)
+	RegisterCollector("cpu", DefaultEnabled, NewCPUCollector)
 }
 
 // NewCPUCollector returns a new Collector exposing kernel/system statistics.
@@ -93,42 +93,42 @@ func NewCPUCollector(logger log.Logger) (Collector, error) {
 		fs:  fs,
 		cpu: nodeCPUSecondsDesc,
 		cpuInfo: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "info"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "info"),
 			"CPU information from /proc/cpuinfo.",
 			[]string{"package", "core", "cpu", "vendor", "family", "model", "model_name", "microcode", "stepping", "cachesize"}, nil,
 		),
 		cpuFrequencyHz: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "frequency_hertz"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "frequency_hertz"),
 			"CPU frequency in hertz from /proc/cpuinfo.",
 			[]string{"package", "core", "cpu"}, nil,
 		),
 		cpuFlagsInfo: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "flag_info"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "flag_info"),
 			"The `flags` field of CPU information from /proc/cpuinfo taken from the first core.",
 			[]string{"flag"}, nil,
 		),
 		cpuBugsInfo: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "bug_info"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "bug_info"),
 			"The `bugs` field of CPU information from /proc/cpuinfo taken from the first core.",
 			[]string{"bug"}, nil,
 		),
 		cpuGuest: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "guest_seconds_total"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "guest_seconds_total"),
 			"Seconds the CPUs spent in guests (VMs) for each mode.",
 			[]string{"cpu", "mode"}, nil,
 		),
 		cpuCoreThrottle: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "core_throttles_total"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "core_throttles_total"),
 			"Number of times this CPU core has been throttled.",
 			[]string{"package", "core"}, nil,
 		),
 		cpuPackageThrottle: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "package_throttles_total"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "package_throttles_total"),
 			"Number of times this CPU package has been throttled.",
 			[]string{"package"}, nil,
 		),
 		cpuIsolated: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "isolated"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "isolated"),
 			"Whether each core is isolated, information from /sys/devices/system/cpu/isolated.",
 			[]string{"cpu"}, nil,
 		),

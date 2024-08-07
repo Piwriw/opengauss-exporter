@@ -36,7 +36,7 @@ type btrfsCollector struct {
 }
 
 func init() {
-	registerCollector("btrfs", defaultEnabled, NewBtrfsCollector)
+	RegisterCollector("btrfs", DefaultEnabled, NewBtrfsCollector)
 }
 
 // NewBtrfsCollector returns a new Collector exposing Btrfs statistics.
@@ -238,7 +238,7 @@ func (c *btrfsCollector) updateBtrfsStats(ch chan<- prometheus.Metric, s *btrfs.
 		labels := append(devLabels, m.extraLabel...)
 
 		desc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, m.name),
+			prometheus.BuildFQName(Namespace, subsystem, m.name),
 			m.desc,
 			labels,
 			nil,

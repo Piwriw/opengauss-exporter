@@ -42,7 +42,7 @@ var metricNameRegex = regexp.MustCompile(`_*[^0-9A-Za-z_]+_*`)
 // MetricFamily is the result of a calculation or aggregation of a general
 // purpose monitoring system, colons will be replaced as well.
 //
-// Note: If not subsequently prepending a namespace and/or subsystem (e.g.,
+// Note: If not subsequently prepending a Namespace and/or subsystem (e.g.,
 // with prometheus.BuildFQName), the caller must ensure that the supplied
 // metricName does not begin with a digit.
 func SanitizeMetricName(metricName string) string {

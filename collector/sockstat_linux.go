@@ -39,7 +39,7 @@ type sockStatCollector struct {
 }
 
 func init() {
-	registerCollector(sockStatSubsystem, defaultEnabled, NewSockStatCollector)
+	RegisterCollector(sockStatSubsystem, DefaultEnabled, NewSockStatCollector)
 }
 
 // NewSockStatCollector returns a new Collector exposing socket stats.
@@ -103,7 +103,7 @@ func (c *sockStatCollector) update(ch chan<- prometheus.Metric, isIPv6 bool, s *
 		// TODO: this must be updated if sockstat6 ever exports this data.
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, sockStatSubsystem, "sockets_used"),
+				prometheus.BuildFQName(Namespace, sockStatSubsystem, "sockets_used"),
 				"Number of IPv4 sockets in use.",
 				nil,
 				nil,
@@ -169,7 +169,7 @@ func (c *sockStatCollector) update(ch chan<- prometheus.Metric, isIPv6 bool, s *
 			ch <- prometheus.MustNewConstMetric(
 				prometheus.NewDesc(
 					prometheus.BuildFQName(
-						namespace,
+						Namespace,
 						sockStatSubsystem,
 						fmt.Sprintf("%s_%s", p.Protocol, pair.name),
 					),

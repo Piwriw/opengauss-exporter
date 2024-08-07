@@ -49,7 +49,7 @@ type meminfoNumaCollector struct {
 }
 
 func init() {
-	registerCollector("meminfo_numa", defaultDisabled, NewMeminfoNumaCollector)
+	RegisterCollector("meminfo_numa", DefaultDisabled, NewMeminfoNumaCollector)
 }
 
 // NewMeminfoNumaCollector returns a new Collector exposing memory stats.
@@ -69,7 +69,7 @@ func (c *meminfoNumaCollector) Update(ch chan<- prometheus.Metric) error {
 		desc, ok := c.metricDescs[v.metricName]
 		if !ok {
 			desc = prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, memInfoNumaSubsystem, v.metricName),
+				prometheus.BuildFQName(Namespace, memInfoNumaSubsystem, v.metricName),
 				fmt.Sprintf("Memory information field %s.", v.metricName),
 				[]string{"node"}, nil)
 			c.metricDescs[v.metricName] = desc

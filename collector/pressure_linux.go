@@ -46,7 +46,7 @@ type pressureStatsCollector struct {
 }
 
 func init() {
-	registerCollector("pressure", defaultEnabled, NewPressureStatsCollector)
+	RegisterCollector("pressure", DefaultEnabled, NewPressureStatsCollector)
 }
 
 // NewPressureStatsCollector returns a Collector exposing pressure stall information
@@ -58,32 +58,32 @@ func NewPressureStatsCollector(logger log.Logger) (Collector, error) {
 
 	return &pressureStatsCollector{
 		cpu: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "pressure", "cpu_waiting_seconds_total"),
+			prometheus.BuildFQName(Namespace, "pressure", "cpu_waiting_seconds_total"),
 			"Total time in seconds that processes have waited for CPU time",
 			nil, nil,
 		),
 		io: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "pressure", "io_waiting_seconds_total"),
+			prometheus.BuildFQName(Namespace, "pressure", "io_waiting_seconds_total"),
 			"Total time in seconds that processes have waited due to IO congestion",
 			nil, nil,
 		),
 		ioFull: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "pressure", "io_stalled_seconds_total"),
+			prometheus.BuildFQName(Namespace, "pressure", "io_stalled_seconds_total"),
 			"Total time in seconds no process could make progress due to IO congestion",
 			nil, nil,
 		),
 		mem: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "pressure", "memory_waiting_seconds_total"),
+			prometheus.BuildFQName(Namespace, "pressure", "memory_waiting_seconds_total"),
 			"Total time in seconds that processes have waited for memory",
 			nil, nil,
 		),
 		memFull: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "pressure", "memory_stalled_seconds_total"),
+			prometheus.BuildFQName(Namespace, "pressure", "memory_stalled_seconds_total"),
 			"Total time in seconds no process could make progress due to memory congestion",
 			nil, nil,
 		),
 		irqFull: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "pressure", "irq_stalled_seconds_total"),
+			prometheus.BuildFQName(Namespace, "pressure", "irq_stalled_seconds_total"),
 			"Total time in seconds no process could make progress due to IRQ congestion",
 			nil, nil,
 		),

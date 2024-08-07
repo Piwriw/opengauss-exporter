@@ -39,7 +39,7 @@ type thermalZoneCollector struct {
 }
 
 func init() {
-	registerCollector("thermal_zone", defaultEnabled, NewThermalZoneCollector)
+	RegisterCollector("thermal_zone", DefaultEnabled, NewThermalZoneCollector)
 }
 
 // NewThermalZoneCollector returns a new Collector exposing kernel/system statistics.
@@ -52,17 +52,17 @@ func NewThermalZoneCollector(logger log.Logger) (Collector, error) {
 	return &thermalZoneCollector{
 		fs: fs,
 		zoneTemp: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, thermalZone, "temp"),
+			prometheus.BuildFQName(Namespace, thermalZone, "temp"),
 			"Zone temperature in Celsius",
 			[]string{"zone", "type"}, nil,
 		),
 		coolingDeviceCurState: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, coolingDevice, "cur_state"),
+			prometheus.BuildFQName(Namespace, coolingDevice, "cur_state"),
 			"Current throttle state of the cooling device",
 			[]string{"name", "type"}, nil,
 		),
 		coolingDeviceMaxState: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, coolingDevice, "max_state"),
+			prometheus.BuildFQName(Namespace, coolingDevice, "max_state"),
 			"Maximum throttle state of the cooling device",
 			[]string{"name", "type"}, nil,
 		),

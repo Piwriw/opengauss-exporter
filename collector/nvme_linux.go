@@ -33,7 +33,7 @@ type nvmeCollector struct {
 }
 
 func init() {
-	registerCollector("nvme", defaultEnabled, NewNVMeCollector)
+	RegisterCollector("nvme", DefaultEnabled, NewNVMeCollector)
 }
 
 // NewNVMeCollector returns a new Collector exposing NVMe stats.
@@ -61,7 +61,7 @@ func (c *nvmeCollector) Update(ch chan<- prometheus.Metric) error {
 
 	for _, device := range devices {
 		infoDesc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "nvme", "info"),
+			prometheus.BuildFQName(Namespace, "nvme", "info"),
 			"Non-numeric data from /sys/class/nvme/<device>, value is always 1.",
 			[]string{"device", "firmware_revision", "model", "serial", "state"},
 			nil,

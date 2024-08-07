@@ -32,7 +32,7 @@ type mdadmCollector struct {
 }
 
 func init() {
-	registerCollector("mdadm", defaultEnabled, NewMdadmCollector)
+	RegisterCollector("mdadm", DefaultEnabled, NewMdadmCollector)
 }
 
 // NewMdadmCollector returns a new Collector exposing raid statistics.
@@ -42,59 +42,59 @@ func NewMdadmCollector(logger log.Logger) (Collector, error) {
 
 var (
 	activeDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "state"),
+		prometheus.BuildFQName(Namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
 		prometheus.Labels{"state": "active"},
 	)
 	inActiveDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "state"),
+		prometheus.BuildFQName(Namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
 		prometheus.Labels{"state": "inactive"},
 	)
 	recoveringDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "state"),
+		prometheus.BuildFQName(Namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
 		prometheus.Labels{"state": "recovering"},
 	)
 	resyncDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "state"),
+		prometheus.BuildFQName(Namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
 		prometheus.Labels{"state": "resync"},
 	)
 	checkDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "state"),
+		prometheus.BuildFQName(Namespace, "md", "state"),
 		"Indicates the state of md-device.",
 		[]string{"device"},
 		prometheus.Labels{"state": "check"},
 	)
 
 	disksDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "disks"),
+		prometheus.BuildFQName(Namespace, "md", "disks"),
 		"Number of active/failed/spare disks of device.",
 		[]string{"device", "state"},
 		nil,
 	)
 
 	disksTotalDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "disks_required"),
+		prometheus.BuildFQName(Namespace, "md", "disks_required"),
 		"Total number of disks of device.",
 		[]string{"device"},
 		nil,
 	)
 
 	blocksTotalDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "blocks"),
+		prometheus.BuildFQName(Namespace, "md", "blocks"),
 		"Total number of blocks on device.",
 		[]string{"device"},
 		nil,
 	)
 
 	blocksSyncedDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "md", "blocks_synced"),
+		prometheus.BuildFQName(Namespace, "md", "blocks_synced"),
 		"Number of blocks synced on device.",
 		[]string{"device"},
 		nil,

@@ -89,7 +89,7 @@ type statCollector struct {
 }
 
 func init() {
-	registerCollector("cpu", defaultEnabled, NewStatCollector)
+	RegisterCollector("cpu", DefaultEnabled, NewStatCollector)
 }
 
 // NewStatCollector returns a new Collector exposing CPU stats.
@@ -97,7 +97,7 @@ func NewStatCollector(logger log.Logger) (Collector, error) {
 	return &statCollector{
 		cpu: typedDesc{nodeCPUSecondsDesc, prometheus.CounterValue},
 		temp: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, cpuCollectorSubsystem, "temperature_celsius"),
+			prometheus.BuildFQName(Namespace, cpuCollectorSubsystem, "temperature_celsius"),
 			"CPU temperature",
 			[]string{"cpu"}, nil,
 		), prometheus.GaugeValue},

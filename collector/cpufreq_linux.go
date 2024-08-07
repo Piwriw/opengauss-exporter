@@ -30,7 +30,7 @@ type cpuFreqCollector struct {
 }
 
 func init() {
-	registerCollector("cpufreq", defaultEnabled, NewCPUFreqCollector)
+	RegisterCollector("cpufreq", DefaultEnabled, NewCPUFreqCollector)
 }
 
 // NewCPUFreqCollector returns a new Collector exposing kernel/system statistics.

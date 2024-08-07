@@ -33,7 +33,7 @@ type timeCollector struct {
 }
 
 func init() {
-	registerCollector("time", defaultEnabled, NewTimeCollector)
+	RegisterCollector("time", DefaultEnabled, NewTimeCollector)
 }
 
 // NewTimeCollector returns a new Collector exposing the current system time in
@@ -42,22 +42,22 @@ func NewTimeCollector(logger log.Logger) (Collector, error) {
 	const subsystem = "time"
 	return &timeCollector{
 		now: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "seconds"),
+			prometheus.BuildFQName(Namespace, subsystem, "seconds"),
 			"System time in seconds since epoch (1970).",
 			nil, nil,
 		), prometheus.GaugeValue},
 		zone: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "zone_offset_seconds"),
+			prometheus.BuildFQName(Namespace, subsystem, "zone_offset_seconds"),
 			"System time zone offset in seconds.",
 			[]string{"time_zone"}, nil,
 		), prometheus.GaugeValue},
 		clocksourcesAvailable: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "clocksource_available_info"),
+			prometheus.BuildFQName(Namespace, subsystem, "clocksource_available_info"),
 			"Available clocksources read from '/sys/devices/system/clocksource'.",
 			[]string{"device", "clocksource"}, nil,
 		), prometheus.GaugeValue},
 		clocksourceCurrent: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "clocksource_current_info"),
+			prometheus.BuildFQName(Namespace, subsystem, "clocksource_current_info"),
 			"Current clocksource read from '/sys/devices/system/clocksource'.",
 			[]string{"device", "clocksource"}, nil,
 		), prometheus.GaugeValue},

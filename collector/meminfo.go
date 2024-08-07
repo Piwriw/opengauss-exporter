@@ -30,7 +30,7 @@ const (
 )
 
 func init() {
-	registerCollector("meminfo", defaultEnabled, NewMeminfoCollector)
+	RegisterCollector("meminfo", DefaultEnabled, NewMeminfoCollector)
 }
 
 // Update calls (*meminfoCollector).getMemInfo to get the platform specific
@@ -50,7 +50,7 @@ func (c *meminfoCollector) Update(ch chan<- prometheus.Metric) error {
 		}
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, memInfoSubsystem, k),
+				prometheus.BuildFQName(Namespace, memInfoSubsystem, k),
 				fmt.Sprintf("Memory information field %s.", k),
 				nil, nil,
 			),

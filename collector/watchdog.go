@@ -33,7 +33,7 @@ type watchdogCollector struct {
 }
 
 func init() {
-	registerCollector("watchdog", defaultEnabled, NewWatchdogCollector)
+	RegisterCollector("watchdog", DefaultEnabled, NewWatchdogCollector)
 }
 
 // NewWatchdogCollector returns a new Collector exposing watchdog stats.
@@ -51,42 +51,42 @@ func NewWatchdogCollector(logger log.Logger) (Collector, error) {
 
 var (
 	watchdogBootstatusDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "watchdog", "bootstatus"),
+		prometheus.BuildFQName(Namespace, "watchdog", "bootstatus"),
 		"Value of /sys/class/watchdog/<watchdog>/bootstatus",
 		[]string{"name"}, nil,
 	)
 	watchdogFwVersionDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "watchdog", "fw_version"),
+		prometheus.BuildFQName(Namespace, "watchdog", "fw_version"),
 		"Value of /sys/class/watchdog/<watchdog>/fw_version",
 		[]string{"name"}, nil,
 	)
 	watchdogNowayoutDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "watchdog", "nowayout"),
+		prometheus.BuildFQName(Namespace, "watchdog", "nowayout"),
 		"Value of /sys/class/watchdog/<watchdog>/nowayout",
 		[]string{"name"}, nil,
 	)
 	watchdogTimeleftDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "watchdog", "timeleft_seconds"),
+		prometheus.BuildFQName(Namespace, "watchdog", "timeleft_seconds"),
 		"Value of /sys/class/watchdog/<watchdog>/timeleft",
 		[]string{"name"}, nil,
 	)
 	watchdogTimeoutDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "watchdog", "timeout_seconds"),
+		prometheus.BuildFQName(Namespace, "watchdog", "timeout_seconds"),
 		"Value of /sys/class/watchdog/<watchdog>/timeout",
 		[]string{"name"}, nil,
 	)
 	watchdogPretimeoutDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "watchdog", "pretimeout_seconds"),
+		prometheus.BuildFQName(Namespace, "watchdog", "pretimeout_seconds"),
 		"Value of /sys/class/watchdog/<watchdog>/pretimeout",
 		[]string{"name"}, nil,
 	)
 	watchdogAccessCs0Desc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "watchdog", "access_cs0"),
+		prometheus.BuildFQName(Namespace, "watchdog", "access_cs0"),
 		"Value of /sys/class/watchdog/<watchdog>/access_cs0",
 		[]string{"name"}, nil,
 	)
 	watchdogInfoDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "watchdog", "info"),
+		prometheus.BuildFQName(Namespace, "watchdog", "info"),
 		"Info of /sys/class/watchdog/<watchdog>",
 		[]string{"name", "options", "identity", "state", "status", "pretimeout_governor"}, nil,
 	)

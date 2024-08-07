@@ -45,7 +45,7 @@ type supervisordCollector struct {
 }
 
 func init() {
-	registerCollector("supervisord", defaultDisabled, NewSupervisordCollector)
+	RegisterCollector("supervisord", DefaultDisabled, NewSupervisordCollector)
 }
 
 // NewSupervisordCollector returns a new Collector exposing supervisord statistics.
@@ -73,25 +73,25 @@ func NewSupervisordCollector(logger log.Logger) (Collector, error) {
 
 	return &supervisordCollector{
 		upDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "up"),
+			prometheus.BuildFQName(Namespace, subsystem, "up"),
 			"Process Up",
 			labelNames,
 			nil,
 		),
 		stateDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "state"),
+			prometheus.BuildFQName(Namespace, subsystem, "state"),
 			"Process State",
 			labelNames,
 			nil,
 		),
 		exitStatusDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "exit_status"),
+			prometheus.BuildFQName(Namespace, subsystem, "exit_status"),
 			"Process Exit Status",
 			labelNames,
 			nil,
 		),
 		startTimeDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "start_time_seconds"),
+			prometheus.BuildFQName(Namespace, subsystem, "start_time_seconds"),
 			"Process start time",
 			labelNames,
 			nil,

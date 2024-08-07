@@ -55,7 +55,7 @@ type ntpCollector struct {
 }
 
 func init() {
-	registerCollector("ntp", defaultDisabled, NewNtpCollector)
+	RegisterCollector("ntp", DefaultDisabled, NewNtpCollector)
 }
 
 // NewNtpCollector returns a new Collector exposing sanity of local NTP server.
@@ -83,42 +83,42 @@ func NewNtpCollector(logger log.Logger) (Collector, error) {
 	level.Warn(logger).Log("msg", "This collector is deprecated and will be removed in the next major version release.")
 	return &ntpCollector{
 		stratum: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, ntpSubsystem, "stratum"),
+			prometheus.BuildFQName(Namespace, ntpSubsystem, "stratum"),
 			"NTPD stratum.",
 			nil, nil,
 		), prometheus.GaugeValue},
 		leap: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, ntpSubsystem, "leap"),
+			prometheus.BuildFQName(Namespace, ntpSubsystem, "leap"),
 			"NTPD leap second indicator, 2 bits.",
 			nil, nil,
 		), prometheus.GaugeValue},
 		rtt: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, ntpSubsystem, "rtt_seconds"),
+			prometheus.BuildFQName(Namespace, ntpSubsystem, "rtt_seconds"),
 			"RTT to NTPD.",
 			nil, nil,
 		), prometheus.GaugeValue},
 		offset: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, ntpSubsystem, "offset_seconds"),
+			prometheus.BuildFQName(Namespace, ntpSubsystem, "offset_seconds"),
 			"ClockOffset between NTP and local clock.",
 			nil, nil,
 		), prometheus.GaugeValue},
 		reftime: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, ntpSubsystem, "reference_timestamp_seconds"),
+			prometheus.BuildFQName(Namespace, ntpSubsystem, "reference_timestamp_seconds"),
 			"NTPD ReferenceTime, UNIX timestamp.",
 			nil, nil,
 		), prometheus.GaugeValue},
 		rootDelay: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, ntpSubsystem, "root_delay_seconds"),
+			prometheus.BuildFQName(Namespace, ntpSubsystem, "root_delay_seconds"),
 			"NTPD RootDelay.",
 			nil, nil,
 		), prometheus.GaugeValue},
 		rootDispersion: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, ntpSubsystem, "root_dispersion_seconds"),
+			prometheus.BuildFQName(Namespace, ntpSubsystem, "root_dispersion_seconds"),
 			"NTPD RootDispersion.",
 			nil, nil,
 		), prometheus.GaugeValue},
 		sanity: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, ntpSubsystem, "sanity"),
+			prometheus.BuildFQName(Namespace, ntpSubsystem, "sanity"),
 			"NTPD sanity according to RFC5905 heuristics and configured limits.",
 			nil, nil,
 		), prometheus.GaugeValue},

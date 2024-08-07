@@ -42,7 +42,7 @@ type drmCollector struct {
 }
 
 func init() {
-	registerCollector("drm", defaultDisabled, NewDrmCollector)
+	RegisterCollector("drm", DefaultDisabled, NewDrmCollector)
 }
 
 // NewDrmCollector returns a new Collector exposing /sys/class/drm/card?/device stats.
@@ -56,42 +56,42 @@ func NewDrmCollector(logger log.Logger) (Collector, error) {
 		fs:     fs,
 		logger: logger,
 		CardInfo: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, drmCollectorSubsystem, "card_info"),
+			prometheus.BuildFQName(Namespace, drmCollectorSubsystem, "card_info"),
 			"Card information",
 			[]string{"card", "memory_vendor", "power_performance_level", "unique_id", "vendor"}, nil,
 		),
 		GPUBusyPercent: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, drmCollectorSubsystem, "gpu_busy_percent"),
+			prometheus.BuildFQName(Namespace, drmCollectorSubsystem, "gpu_busy_percent"),
 			"How busy the GPU is as a percentage.",
 			[]string{"card"}, nil,
 		),
 		MemoryGTTSize: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, drmCollectorSubsystem, "memory_gtt_size_bytes"),
+			prometheus.BuildFQName(Namespace, drmCollectorSubsystem, "memory_gtt_size_bytes"),
 			"The size of the graphics translation table (GTT) block in bytes.",
 			[]string{"card"}, nil,
 		),
 		MemoryGTTUsed: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, drmCollectorSubsystem, "memory_gtt_used_bytes"),
+			prometheus.BuildFQName(Namespace, drmCollectorSubsystem, "memory_gtt_used_bytes"),
 			"The used amount of the graphics translation table (GTT) block in bytes.",
 			[]string{"card"}, nil,
 		),
 		MemoryVisibleVRAMSize: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, drmCollectorSubsystem, "memory_vis_vram_size_bytes"),
+			prometheus.BuildFQName(Namespace, drmCollectorSubsystem, "memory_vis_vram_size_bytes"),
 			"The size of visible VRAM in bytes.",
 			[]string{"card"}, nil,
 		),
 		MemoryVisibleVRAMUsed: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, drmCollectorSubsystem, "memory_vis_vram_used_bytes"),
+			prometheus.BuildFQName(Namespace, drmCollectorSubsystem, "memory_vis_vram_used_bytes"),
 			"The used amount of visible VRAM in bytes.",
 			[]string{"card"}, nil,
 		),
 		MemoryVRAMSize: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, drmCollectorSubsystem, "memory_vram_size_bytes"),
+			prometheus.BuildFQName(Namespace, drmCollectorSubsystem, "memory_vram_size_bytes"),
 			"The size of VRAM in bytes.",
 			[]string{"card"}, nil,
 		),
 		MemoryVRAMUsed: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, drmCollectorSubsystem, "memory_vram_used_bytes"),
+			prometheus.BuildFQName(Namespace, drmCollectorSubsystem, "memory_vram_used_bytes"),
 			"The used amount of VRAM in bytes.",
 			[]string{"card"}, nil,
 		),

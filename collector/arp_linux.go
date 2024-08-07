@@ -43,7 +43,7 @@ type arpCollector struct {
 }
 
 func init() {
-	registerCollector("arp", defaultEnabled, NewARPCollector)
+	RegisterCollector("arp", DefaultEnabled, NewARPCollector)
 }
 
 // NewARPCollector returns a new Collector exposing ARP stats.
@@ -57,7 +57,7 @@ func NewARPCollector(logger log.Logger) (Collector, error) {
 		fs:           fs,
 		deviceFilter: newDeviceFilter(*arpDeviceExclude, *arpDeviceInclude),
 		entries: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "arp", "entries"),
+			prometheus.BuildFQName(Namespace, "arp", "entries"),
 			"ARP entries by device",
 			[]string{"device"}, nil,
 		),

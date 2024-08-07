@@ -39,7 +39,7 @@ type slabinfoCollector struct {
 }
 
 func init() {
-	registerCollector("slabinfo", defaultDisabled, NewSlabinfoCollector)
+	RegisterCollector("slabinfo", DefaultDisabled, NewSlabinfoCollector)
 }
 
 func NewSlabinfoCollector(logger log.Logger) (Collector, error) {
@@ -78,7 +78,7 @@ func (c *slabinfoCollector) Update(ch chan<- prometheus.Metric) error {
 
 func (c *slabinfoCollector) activeObjects(label string, val int64) prometheus.Metric {
 	desc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, c.subsystem, "active_objects"),
+		prometheus.BuildFQName(Namespace, c.subsystem, "active_objects"),
 		"The number of objects that are currently active (i.e., in use).",
 		c.labels, nil)
 
@@ -89,7 +89,7 @@ func (c *slabinfoCollector) activeObjects(label string, val int64) prometheus.Me
 
 func (c *slabinfoCollector) objects(label string, val int64) prometheus.Metric {
 	desc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, c.subsystem, "objects"),
+		prometheus.BuildFQName(Namespace, c.subsystem, "objects"),
 		"The total number of allocated objects (i.e., objects that are both in use and not in use).",
 		c.labels, nil)
 
@@ -100,7 +100,7 @@ func (c *slabinfoCollector) objects(label string, val int64) prometheus.Metric {
 
 func (c *slabinfoCollector) objectSizeBytes(label string, val int64) prometheus.Metric {
 	desc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, c.subsystem, "object_size_bytes"),
+		prometheus.BuildFQName(Namespace, c.subsystem, "object_size_bytes"),
 		"The size of objects in this slab, in bytes.",
 		c.labels, nil)
 
@@ -111,7 +111,7 @@ func (c *slabinfoCollector) objectSizeBytes(label string, val int64) prometheus.
 
 func (c *slabinfoCollector) objectsPerSlab(label string, val int64) prometheus.Metric {
 	desc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, c.subsystem, "objects_per_slab"),
+		prometheus.BuildFQName(Namespace, c.subsystem, "objects_per_slab"),
 		"The number of objects stored in each slab.",
 		c.labels, nil)
 
@@ -122,7 +122,7 @@ func (c *slabinfoCollector) objectsPerSlab(label string, val int64) prometheus.M
 
 func (c *slabinfoCollector) pagesPerSlab(label string, val int64) prometheus.Metric {
 	desc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, c.subsystem, "pages_per_slab"),
+		prometheus.BuildFQName(Namespace, c.subsystem, "pages_per_slab"),
 		"The number of pages allocated for each slab.",
 		c.labels, nil)
 

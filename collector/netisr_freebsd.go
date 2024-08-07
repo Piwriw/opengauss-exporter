@@ -33,7 +33,7 @@ const (
 )
 
 func init() {
-	registerCollector("netisr", defaultEnabled, NewNetisrCollector)
+	RegisterCollector("netisr", DefaultEnabled, NewNetisrCollector)
 }
 
 func NewNetisrCollector(logger log.Logger) (Collector, error) {
@@ -95,7 +95,7 @@ func (c *netisrCollector) Update(ch chan<- prometheus.Metric) error {
 
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, netisrCollectorSubsystem, m.name),
+				prometheus.BuildFQName(Namespace, netisrCollectorSubsystem, m.name),
 				m.description,
 				nil, nil,
 			), m.valueType, v)

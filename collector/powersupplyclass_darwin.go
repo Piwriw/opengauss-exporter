@@ -209,7 +209,7 @@ func (c *powerSupplyClassCollector) Update(ch chan<- prometheus.Metric) error {
 
 			ch <- prometheus.MustNewConstMetric(
 				prometheus.NewDesc(
-					prometheus.BuildFQName(namespace, c.subsystem, name),
+					prometheus.BuildFQName(Namespace, c.subsystem, name),
 					fmt.Sprintf("IOKit Power Source information field %s for <power_supply>.", name),
 					[]string{"power_supply"}, nil,
 				),
@@ -244,7 +244,7 @@ func (c *powerSupplyClassCollector) Update(ch chan<- prometheus.Metric) error {
 			}
 		}
 		fieldDesc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, "info"),
+			prometheus.BuildFQName(Namespace, c.subsystem, "info"),
 			"IOKit Power Source information for <power_supply>.",
 			keys,
 			nil,
@@ -410,7 +410,7 @@ func pushEnumMetric(ch chan<- prometheus.Metric, values map[string]float64, name
 	for state, value := range values {
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, subsystem, name),
+				prometheus.BuildFQName(Namespace, subsystem, name),
 				fmt.Sprintf("IOKit Power Source information field %s for <power_supply>.", name),
 				[]string{"power_supply", "state"}, nil,
 			),

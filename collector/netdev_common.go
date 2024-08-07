@@ -50,7 +50,7 @@ type netDevCollector struct {
 type netDevStats map[string]map[string]uint64
 
 func init() {
-	registerCollector("netdev", defaultEnabled, NewNetDevCollector)
+	RegisterCollector("netdev", DefaultEnabled, NewNetDevCollector)
 }
 
 // NewNetDevCollector returns a new Collector exposing network device stats.
@@ -99,7 +99,7 @@ func (c *netDevCollector) metricDesc(key string) *prometheus.Desc {
 
 	if _, ok := c.metricDescs[key]; !ok {
 		c.metricDescs[key] = prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, key+"_total"),
+			prometheus.BuildFQName(Namespace, c.subsystem, key+"_total"),
 			fmt.Sprintf("Network device statistic %s.", key),
 			[]string{"device"},
 			nil,
@@ -129,7 +129,7 @@ func (c *netDevCollector) Update(ch chan<- prometheus.Metric) error {
 			return fmt.Errorf("could not get network interfaces: %w", err)
 		}
 
-		desc := prometheus.NewDesc(prometheus.BuildFQName(namespace, "network_address",
+		desc := prometheus.NewDesc(prometheus.BuildFQName(Namespace, "network_address",
 			"info"), "node network address by device",
 			[]string{"device", "address", "netmask", "scope"}, nil)
 

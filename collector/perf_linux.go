@@ -46,7 +46,7 @@ var (
 )
 
 func init() {
-	registerCollector(perfSubsystem, defaultDisabled, NewPerfCollector)
+	RegisterCollector(perfSubsystem, DefaultDisabled, NewPerfCollector)
 }
 
 var (
@@ -265,7 +265,7 @@ func newPerfTracepointCollector(
 		}
 		descs[tracepoint.subsystem][tracepoint.event] = prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				tracepoint.label(),
 			),
@@ -418,7 +418,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 	collector.desc = map[string]*prometheus.Desc{
 		"cpucycles_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cpucycles_total",
 			),
@@ -428,7 +428,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"instructions_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"instructions_total",
 			),
@@ -438,7 +438,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"branch_instructions_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"branch_instructions_total",
 			),
@@ -448,7 +448,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"branch_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"branch_misses_total",
 			),
@@ -458,7 +458,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_refs_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_refs_total",
 			),
@@ -468,7 +468,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_misses_total",
 			),
@@ -478,7 +478,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"ref_cpucycles_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"ref_cpucycles_total",
 			),
@@ -488,7 +488,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"stalled_cycles_backend_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"stalled_cycles_backend_total",
 			),
@@ -498,7 +498,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"stalled_cycles_frontend_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"stalled_cycles_frontend_total",
 			),
@@ -508,7 +508,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"page_faults_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"page_faults_total",
 			),
@@ -518,7 +518,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"context_switches_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"context_switches_total",
 			),
@@ -528,7 +528,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cpu_migrations_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cpu_migrations_total",
 			),
@@ -538,7 +538,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"minor_faults_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"minor_faults_total",
 			),
@@ -548,7 +548,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"major_faults_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"major_faults_total",
 			),
@@ -558,7 +558,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_l1d_read_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_l1d_read_hits_total",
 			),
@@ -568,7 +568,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_l1d_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_l1d_read_misses_total",
 			),
@@ -578,7 +578,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_l1d_write_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_l1d_write_hits_total",
 			),
@@ -588,7 +588,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_l1_instr_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_l1_instr_read_misses_total",
 			),
@@ -598,7 +598,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_tlb_instr_read_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_tlb_instr_read_hits_total",
 			),
@@ -608,7 +608,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_tlb_instr_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_tlb_instr_read_misses_total",
 			),
@@ -618,7 +618,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_ll_read_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_ll_read_hits_total",
 			),
@@ -628,7 +628,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_ll_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_ll_read_misses_total",
 			),
@@ -638,7 +638,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_ll_write_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_ll_write_hits_total",
 			),
@@ -648,7 +648,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_ll_write_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_ll_write_misses_total",
 			),
@@ -658,7 +658,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_bpu_read_hits_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_bpu_read_hits_total",
 			),
@@ -668,7 +668,7 @@ func NewPerfCollector(logger log.Logger) (Collector, error) {
 		),
 		"cache_bpu_read_misses_total": prometheus.NewDesc(
 			prometheus.BuildFQName(
-				namespace,
+				Namespace,
 				perfSubsystem,
 				"cache_bpu_read_misses_total",
 			),

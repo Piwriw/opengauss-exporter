@@ -26,18 +26,18 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// Namespace defines the common namespace to be used by all metrics.
-const namespace = "node"
+// Namespace defines the common Namespace to be used by all metrics.
+const Namespace = "node"
 
 var (
-	scrapeDurationDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "scrape", "collector_duration_seconds"),
+	ScrapeDurationDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(Namespace, "scrape", "collector_duration_seconds"),
 		"node_exporter: Duration of a collector scrape.",
 		[]string{"collector"},
 		nil,
 	)
-	scrapeSuccessDesc = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "scrape", "collector_success"),
+	ScrapeSuccessDesc = prometheus.NewDesc(
+		prometheus.BuildFQName(Namespace, "scrape", "collector_success"),
 		"node_exporter: Whether a collector succeeded.",
 		[]string{"collector"},
 		nil,
@@ -45,8 +45,8 @@ var (
 )
 
 const (
-	defaultEnabled  = true
-	defaultDisabled = false
+	DefaultEnabled  = true
+	DefaultDisabled = false
 )
 
 var (
@@ -57,7 +57,7 @@ var (
 	forcedCollectors       = map[string]bool{} // collectors which have been explicitly enabled or disabled
 )
 
-func registerCollector(collector string, isDefaultEnabled bool, factory func(logger log.Logger) (Collector, error)) {
+func RegisterCollector(collector string, isDefaultEnabled bool, factory func(logger log.Logger) (Collector, error)) {
 	var helpDefaultState string
 	if isDefaultEnabled {
 		helpDefaultState = "enabled"
@@ -139,8 +139,8 @@ func NewNodeCollector(logger log.Logger, filters ...string) (*NodeCollector, err
 
 // Describe implements the prometheus.Collector interface.
 func (n NodeCollector) Describe(ch chan<- *prometheus.Desc) {
-	ch <- scrapeDurationDesc
-	ch <- scrapeSuccessDesc
+	ch <- ScrapeDurationDesc
+	ch <- ScrapeSuccessDesc
 }
 
 // Collect implements the prometheus.Collector interface.
@@ -173,8 +173,8 @@ func execute(name string, c Collector, ch chan<- prometheus.Metric, logger log.L
 		level.Debug(logger).Log("msg", "collector succeeded", "name", name, "duration_seconds", duration.Seconds())
 		success = 1
 	}
-	ch <- prometheus.MustNewConstMetric(scrapeDurationDesc, prometheus.GaugeValue, duration.Seconds(), name)
-	ch <- prometheus.MustNewConstMetric(scrapeSuccessDesc, prometheus.GaugeValue, success, name)
+	ch <- prometheus.MustNewConstMetric(ScrapeDurationDesc, prometheus.GaugeValue, duration.Seconds(), name)
+	ch <- prometheus.MustNewConstMetric(ScrapeSuccessDesc, prometheus.GaugeValue, success, name)
 }
 
 // Collector is the interface a collector has to implement.

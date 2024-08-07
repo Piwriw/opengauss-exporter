@@ -28,7 +28,7 @@ type bootTimeCollector struct {
 }
 
 func init() {
-	registerCollector("boottime", defaultEnabled, newBootTimeCollector)
+	RegisterCollector("boottime", DefaultEnabled, newBootTimeCollector)
 }
 
 // newBootTimeCollector returns a new Collector exposing system boot time on BSD systems.
@@ -51,7 +51,7 @@ func (c *bootTimeCollector) Update(ch chan<- prometheus.Metric) error {
 
 	ch <- prometheus.MustNewConstMetric(
 		prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "boot_time_seconds"),
+			prometheus.BuildFQName(Namespace, "", "boot_time_seconds"),
 			"Unix time of last boot, including microseconds.",
 			nil, nil,
 		), prometheus.GaugeValue, v)

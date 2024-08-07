@@ -30,13 +30,13 @@ type softirqsCollector struct {
 }
 
 func init() {
-	registerCollector("softirqs", defaultDisabled, NewSoftirqsCollector)
+	RegisterCollector("softirqs", DefaultDisabled, NewSoftirqsCollector)
 }
 
 // NewSoftirqsCollector returns a new Collector exposing softirq stats.
 func NewSoftirqsCollector(logger log.Logger) (Collector, error) {
 	desc := typedDesc{prometheus.NewDesc(
-		namespace+"_softirqs_functions_total",
+		Namespace+"_softirqs_functions_total",
 		"Softirq counts per CPU.",
 		softirqLabelNames, nil,
 	), prometheus.CounterValue}

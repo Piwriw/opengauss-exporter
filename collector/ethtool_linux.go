@@ -115,95 +115,95 @@ func makeEthtoolCollector(logger log.Logger) (*ethtoolCollector, error) {
 		logger:         logger,
 		entries: map[string]*prometheus.Desc{
 			"rx_bytes": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "ethtool", "received_bytes_total"),
+				prometheus.BuildFQName(Namespace, "ethtool", "received_bytes_total"),
 				"Network interface bytes received",
 				[]string{"device"}, nil,
 			),
 			"rx_dropped": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "ethtool", "received_dropped_total"),
+				prometheus.BuildFQName(Namespace, "ethtool", "received_dropped_total"),
 				"Number of received frames dropped",
 				[]string{"device"}, nil,
 			),
 			"rx_errors": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "ethtool", "received_errors_total"),
+				prometheus.BuildFQName(Namespace, "ethtool", "received_errors_total"),
 				"Number of received frames with errors",
 				[]string{"device"}, nil,
 			),
 			"rx_packets": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "ethtool", "received_packets_total"),
+				prometheus.BuildFQName(Namespace, "ethtool", "received_packets_total"),
 				"Network interface packets received",
 				[]string{"device"}, nil,
 			),
 			"tx_bytes": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "ethtool", "transmitted_bytes_total"),
+				prometheus.BuildFQName(Namespace, "ethtool", "transmitted_bytes_total"),
 				"Network interface bytes sent",
 				[]string{"device"}, nil,
 			),
 			"tx_errors": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "ethtool", "transmitted_errors_total"),
+				prometheus.BuildFQName(Namespace, "ethtool", "transmitted_errors_total"),
 				"Number of sent frames with errors",
 				[]string{"device"}, nil,
 			),
 			"tx_packets": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "ethtool", "transmitted_packets_total"),
+				prometheus.BuildFQName(Namespace, "ethtool", "transmitted_packets_total"),
 				"Network interface packets sent",
 				[]string{"device"}, nil,
 			),
 
 			// link info
 			"supported_port": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "supported_port_info"),
+				prometheus.BuildFQName(Namespace, "network", "supported_port_info"),
 				"Type of ports or PHYs supported by network device",
 				[]string{"device", "type"}, nil,
 			),
 			"supported_speed": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "supported_speed_bytes"),
+				prometheus.BuildFQName(Namespace, "network", "supported_speed_bytes"),
 				"Combination of speeds and features supported by network device",
 				[]string{"device", "duplex", "mode"}, nil,
 			),
 			"supported_autonegotiate": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "autonegotiate_supported"),
+				prometheus.BuildFQName(Namespace, "network", "autonegotiate_supported"),
 				"If this port device supports autonegotiate",
 				[]string{"device"}, nil,
 			),
 			"supported_pause": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "pause_supported"),
+				prometheus.BuildFQName(Namespace, "network", "pause_supported"),
 				"If this port device supports pause frames",
 				[]string{"device"}, nil,
 			),
 			"supported_asymmetricpause": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "asymmetricpause_supported"),
+				prometheus.BuildFQName(Namespace, "network", "asymmetricpause_supported"),
 				"If this port device supports asymmetric pause frames",
 				[]string{"device"}, nil,
 			),
 			"advertised_speed": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "advertised_speed_bytes"),
+				prometheus.BuildFQName(Namespace, "network", "advertised_speed_bytes"),
 				"Combination of speeds and features offered by network device",
 				[]string{"device", "duplex", "mode"}, nil,
 			),
 			"advertised_autonegotiate": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "autonegotiate_advertised"),
+				prometheus.BuildFQName(Namespace, "network", "autonegotiate_advertised"),
 				"If this port device offers autonegotiate",
 				[]string{"device"}, nil,
 			),
 			"advertised_pause": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "pause_advertised"),
+				prometheus.BuildFQName(Namespace, "network", "pause_advertised"),
 				"If this port device offers pause capability",
 				[]string{"device"}, nil,
 			),
 			"advertised_asymmetricpause": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "asymmetricpause_advertised"),
+				prometheus.BuildFQName(Namespace, "network", "asymmetricpause_advertised"),
 				"If this port device offers asymmetric pause capability",
 				[]string{"device"}, nil,
 			),
 			"autonegotiate": prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, "network", "autonegotiate"),
+				prometheus.BuildFQName(Namespace, "network", "autonegotiate"),
 				"If this port is using autonegotiate",
 				[]string{"device"}, nil,
 			),
 		},
 		infoDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "ethtool", "info"),
+			prometheus.BuildFQName(Namespace, "ethtool", "info"),
 			"A metric with a constant '1' value labeled by bus_info, device, driver, expansion_rom_version, firmware_version, version.",
 			[]string{"bus_info", "device", "driver", "expansion_rom_version", "firmware_version", "version"}, nil,
 		),
@@ -211,7 +211,7 @@ func makeEthtoolCollector(logger log.Logger) (*ethtoolCollector, error) {
 }
 
 func init() {
-	registerCollector("ethtool", defaultDisabled, NewEthtoolCollector)
+	RegisterCollector("ethtool", DefaultDisabled, NewEthtoolCollector)
 }
 
 // Generate the fully-qualified metric name for the ethool metric.
@@ -219,7 +219,7 @@ func buildEthtoolFQName(metric string) string {
 	metricName := strings.TrimLeft(strings.ToLower(SanitizeMetricName(metric)), "_")
 	metricName = ethtoolReceivedRegex.ReplaceAllString(metricName, "${1}received${2}")
 	metricName = ethtoolTransmitRegex.ReplaceAllString(metricName, "${1}transmitted${2}")
-	return prometheus.BuildFQName(namespace, "ethtool", metricName)
+	return prometheus.BuildFQName(Namespace, "ethtool", metricName)
 }
 
 // NewEthtoolCollector returns a new Collector exposing ethtool stats.

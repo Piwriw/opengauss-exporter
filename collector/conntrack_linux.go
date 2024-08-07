@@ -53,59 +53,59 @@ type conntrackStatistics struct {
 }
 
 func init() {
-	registerCollector("conntrack", defaultEnabled, NewConntrackCollector)
+	RegisterCollector("conntrack", DefaultEnabled, NewConntrackCollector)
 }
 
 // NewConntrackCollector returns a new Collector exposing conntrack stats.
 func NewConntrackCollector(logger log.Logger) (Collector, error) {
 	return &conntrackCollector{
 		current: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_entries"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_entries"),
 			"Number of currently allocated flow entries for connection tracking.",
 			nil, nil,
 		),
 		limit: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_entries_limit"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_entries_limit"),
 			"Maximum size of connection tracking table.",
 			nil, nil,
 		),
 		found: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_stat_found"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_stat_found"),
 			"Number of searched entries which were successful.",
 			nil, nil,
 		),
 		invalid: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_stat_invalid"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_stat_invalid"),
 			"Number of packets seen which can not be tracked.",
 			nil, nil,
 		),
 		ignore: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_stat_ignore"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_stat_ignore"),
 			"Number of packets seen which are already connected to a conntrack entry.",
 			nil, nil,
 		),
 		insert: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_stat_insert"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_stat_insert"),
 			"Number of entries inserted into the list.",
 			nil, nil,
 		),
 		insertFailed: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_stat_insert_failed"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_stat_insert_failed"),
 			"Number of entries for which list insertion was attempted but failed.",
 			nil, nil,
 		),
 		drop: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_stat_drop"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_stat_drop"),
 			"Number of packets dropped due to conntrack failure.",
 			nil, nil,
 		),
 		earlyDrop: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_stat_early_drop"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_stat_early_drop"),
 			"Number of dropped conntrack entries to make room for new ones, if maximum table size was reached.",
 			nil, nil,
 		),
 		searchRestart: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "", "nf_conntrack_stat_search_restart"),
+			prometheus.BuildFQName(Namespace, "", "nf_conntrack_stat_search_restart"),
 			"Number of conntrack table lookups which had to be restarted due to hashtable resizes.",
 			nil, nil,
 		),

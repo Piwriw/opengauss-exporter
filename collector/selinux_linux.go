@@ -30,7 +30,7 @@ type selinuxCollector struct {
 }
 
 func init() {
-	registerCollector("selinux", defaultEnabled, NewSelinuxCollector)
+	RegisterCollector("selinux", DefaultEnabled, NewSelinuxCollector)
 }
 
 // NewSelinuxCollector returns a new Collector exposing SELinux statistics.
@@ -39,17 +39,17 @@ func NewSelinuxCollector(logger log.Logger) (Collector, error) {
 
 	return &selinuxCollector{
 		configMode: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "config_mode"),
+			prometheus.BuildFQName(Namespace, subsystem, "config_mode"),
 			"Configured SELinux enforcement mode",
 			nil, nil,
 		),
 		currentMode: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "current_mode"),
+			prometheus.BuildFQName(Namespace, subsystem, "current_mode"),
 			"Current SELinux enforcement mode",
 			nil, nil,
 		),
 		enabled: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "enabled"),
+			prometheus.BuildFQName(Namespace, subsystem, "enabled"),
 			"SELinux is enabled, 1 is true, 0 is false",
 			nil, nil,
 		),

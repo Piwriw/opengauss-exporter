@@ -39,7 +39,7 @@ type diskstatsCollector struct {
 }
 
 func init() {
-	registerCollector("diskstats", defaultEnabled, NewDiskstatsCollector)
+	RegisterCollector("diskstats", DefaultEnabled, NewDiskstatsCollector)
 }
 
 // NewDiskstatsCollector returns a new Collector exposing disk device stats.
@@ -65,7 +65,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			{
 				typedDesc: typedDesc{
 					desc: prometheus.NewDesc(
-						prometheus.BuildFQName(namespace, diskSubsystem, "read_sectors_total"),
+						prometheus.BuildFQName(Namespace, diskSubsystem, "read_sectors_total"),
 						"The total number of sectors read successfully.",
 						diskLabelNames,
 						nil,
@@ -97,7 +97,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			{
 				typedDesc: typedDesc{
 					desc: prometheus.NewDesc(
-						prometheus.BuildFQName(namespace, diskSubsystem, "written_sectors_total"),
+						prometheus.BuildFQName(Namespace, diskSubsystem, "written_sectors_total"),
 						"The total number of sectors written successfully.",
 						diskLabelNames,
 						nil,
@@ -138,7 +138,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			{
 				typedDesc: typedDesc{
 					desc: prometheus.NewDesc(
-						prometheus.BuildFQName(namespace, diskSubsystem, "read_errors_total"),
+						prometheus.BuildFQName(Namespace, diskSubsystem, "read_errors_total"),
 						"The total number of read errors.",
 						diskLabelNames,
 						nil,
@@ -152,7 +152,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			{
 				typedDesc: typedDesc{
 					desc: prometheus.NewDesc(
-						prometheus.BuildFQName(namespace, diskSubsystem, "write_errors_total"),
+						prometheus.BuildFQName(Namespace, diskSubsystem, "write_errors_total"),
 						"The total number of write errors.",
 						diskLabelNames,
 						nil,
@@ -166,7 +166,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			{
 				typedDesc: typedDesc{
 					desc: prometheus.NewDesc(
-						prometheus.BuildFQName(namespace, diskSubsystem, "read_retries_total"),
+						prometheus.BuildFQName(Namespace, diskSubsystem, "read_retries_total"),
 						"The total number of read retries.",
 						diskLabelNames,
 						nil,
@@ -180,7 +180,7 @@ func NewDiskstatsCollector(logger log.Logger) (Collector, error) {
 			{
 				typedDesc: typedDesc{
 					desc: prometheus.NewDesc(
-						prometheus.BuildFQName(namespace, diskSubsystem, "write_retries_total"),
+						prometheus.BuildFQName(Namespace, diskSubsystem, "write_retries_total"),
 						"The total number of write retries.",
 						diskLabelNames,
 						nil,

@@ -39,7 +39,7 @@ type drbdNumericalMetric struct {
 func newDRBDNumericalMetric(name, desc string, valueType prometheus.ValueType, multiplier float64) drbdNumericalMetric {
 	return drbdNumericalMetric{
 		desc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "drbd", name),
+			prometheus.BuildFQName(Namespace, "drbd", name),
 			desc,
 			[]string{"device"},
 			nil,
@@ -66,7 +66,7 @@ func (m *drbdStringPairMetric) isOkay(v string) float64 {
 func newDRBDStringPairMetric(name, desc, valueOK string) drbdStringPairMetric {
 	return drbdStringPairMetric{
 		desc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "drbd", name),
+			prometheus.BuildFQName(Namespace, "drbd", name),
 			desc,
 			[]string{"device", "node"},
 			nil,
@@ -83,7 +83,7 @@ type drbdCollector struct {
 }
 
 func init() {
-	registerCollector("drbd", defaultDisabled, newDRBDCollector)
+	RegisterCollector("drbd", DefaultDisabled, newDRBDCollector)
 }
 
 func newDRBDCollector(logger log.Logger) (Collector, error) {
@@ -177,7 +177,7 @@ func newDRBDCollector(logger log.Logger) (Collector, error) {
 		},
 
 		connected: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "drbd", "connected"),
+			prometheus.BuildFQName(Namespace, "drbd", "connected"),
 			"Whether DRBD is connected to the peer.",
 			[]string{"device"},
 			nil,

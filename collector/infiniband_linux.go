@@ -36,7 +36,7 @@ type infinibandCollector struct {
 }
 
 func init() {
-	registerCollector("infiniband", defaultEnabled, NewInfiniBandCollector)
+	RegisterCollector("infiniband", DefaultEnabled, NewInfiniBandCollector)
 }
 
 // NewInfiniBandCollector returns a new Collector exposing InfiniBand stats.
@@ -92,7 +92,7 @@ func NewInfiniBandCollector(logger log.Logger) (Collector, error) {
 
 	for metricName, description := range descriptions {
 		i.metricDescs[metricName] = prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, i.subsystem, metricName),
+			prometheus.BuildFQName(Namespace, i.subsystem, metricName),
 			description,
 			[]string{"device", "port"},
 			nil,
@@ -124,7 +124,7 @@ func (c *infinibandCollector) Update(ch chan<- prometheus.Metric) error {
 
 	for _, device := range devices {
 		infoDesc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, "info"),
+			prometheus.BuildFQName(Namespace, c.subsystem, "info"),
 			"Non-numeric data from /sys/class/infiniband/<device>, value is always 1.",
 			[]string{"device", "board_id", "firmware_version", "hca_type"},
 			nil,

@@ -49,7 +49,7 @@ type tapestatsCollector struct {
 }
 
 func init() {
-	registerCollector("tapestats", defaultEnabled, NewTapestatsCollector)
+	RegisterCollector("tapestats", DefaultEnabled, NewTapestatsCollector)
 }
 
 // NewTapestatsCollector returns a new Collector exposing tape device stats.
@@ -68,52 +68,52 @@ func NewTapestatsCollector(logger log.Logger) (Collector, error) {
 		ignoredDevicesPattern: regexp.MustCompile(*ignoredTapeDevices),
 
 		ioNow: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "io_now"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "io_now"),
 			"The number of I/Os currently outstanding to this device.",
 			tapeLabelNames, nil,
 		),
 		ioTimeSeconds: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "io_time_seconds_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "io_time_seconds_total"),
 			"The amount of time spent waiting for all I/O to complete (including read and write). This includes tape movement commands such as seeking between file or set marks and implicit tape movement such as when rewind on close tape devices are used.",
 			tapeLabelNames, nil,
 		),
 		othersCompletedTotal: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "io_others_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "io_others_total"),
 			"The number of I/Os issued to the tape drive other than read or write commands. The time taken to complete these commands uses the following calculation io_time_seconds_total-read_time_seconds_total-write_time_seconds_total",
 			tapeLabelNames, nil,
 		),
 		readByteTotal: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "read_bytes_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "read_bytes_total"),
 			"The number of bytes read from the tape drive.",
 			tapeLabelNames, nil,
 		),
 		readsCompletedTotal: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "reads_completed_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "reads_completed_total"),
 			"The number of read requests issued to the tape drive.",
 			tapeLabelNames, nil,
 		),
 		readTimeSeconds: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "read_time_seconds_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "read_time_seconds_total"),
 			"The amount of time spent waiting for read requests to complete.",
 			tapeLabelNames, nil,
 		),
 		writtenByteTotal: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "written_bytes_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "written_bytes_total"),
 			"The number of bytes written to the tape drive.",
 			tapeLabelNames, nil,
 		),
 		writesCompletedTotal: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "writes_completed_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "writes_completed_total"),
 			"The number of write requests issued to the tape drive.",
 			tapeLabelNames, nil,
 		),
 		writeTimeSeconds: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "write_time_seconds_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "write_time_seconds_total"),
 			"The amount of time spent waiting for write requests to complete.",
 			tapeLabelNames, nil,
 		),
 		residualTotal: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, tapeSubsystem, "residual_total"),
+			prometheus.BuildFQName(Namespace, tapeSubsystem, "residual_total"),
 			"The number of times during a read or write we found the residual amount to be non-zero. This should mean that a program is issuing a read larger thean the block size on tape. For write not all data made it to tape.",
 			tapeLabelNames, nil,
 		),

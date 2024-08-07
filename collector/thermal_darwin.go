@@ -63,7 +63,7 @@ type thermCollector struct {
 const thermal = "thermal"
 
 func init() {
-	registerCollector(thermal, defaultEnabled, NewThermCollector)
+	RegisterCollector(thermal, DefaultEnabled, NewThermCollector)
 }
 
 // NewThermCollector returns a new Collector exposing current CPU power levels.
@@ -71,7 +71,7 @@ func NewThermCollector(logger log.Logger) (Collector, error) {
 	return &thermCollector{
 		cpuSchedulerLimit: typedDesc{
 			desc: prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, thermal, "cpu_scheduler_limit_ratio"),
+				prometheus.BuildFQName(Namespace, thermal, "cpu_scheduler_limit_ratio"),
 				"Represents the percentage (0-100) of CPU time available. 100% at normal operation. The OS may limit this time for a percentage less than 100%.",
 				nil,
 				nil),
@@ -79,7 +79,7 @@ func NewThermCollector(logger log.Logger) (Collector, error) {
 		},
 		cpuAvailableCPU: typedDesc{
 			desc: prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, thermal, "cpu_available_cpu"),
+				prometheus.BuildFQName(Namespace, thermal, "cpu_available_cpu"),
 				"Reflects how many, if any, CPUs have been taken offline. Represented as an integer number of CPUs (0 - Max CPUs).",
 				nil,
 				nil,
@@ -88,7 +88,7 @@ func NewThermCollector(logger log.Logger) (Collector, error) {
 		},
 		cpuSpeedLimit: typedDesc{
 			desc: prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, thermal, "cpu_speed_limit_ratio"),
+				prometheus.BuildFQName(Namespace, thermal, "cpu_speed_limit_ratio"),
 				"Defines the speed & voltage limits placed on the CPU. Represented as a percentage (0-100) of maximum CPU speed.",
 				nil,
 				nil,

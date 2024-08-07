@@ -35,7 +35,7 @@ type runitCollector struct {
 }
 
 func init() {
-	registerCollector("runit", defaultDisabled, NewRunitCollector)
+	RegisterCollector("runit", DefaultDisabled, NewRunitCollector)
 }
 
 // NewRunitCollector returns a new Collector exposing runit statistics.
@@ -50,22 +50,22 @@ func NewRunitCollector(logger log.Logger) (Collector, error) {
 
 	return &runitCollector{
 		state: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "state"),
+			prometheus.BuildFQName(Namespace, subsystem, "state"),
 			"State of runit service.",
 			labelNames, constLabels,
 		), prometheus.GaugeValue},
 		stateDesired: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "desired_state"),
+			prometheus.BuildFQName(Namespace, subsystem, "desired_state"),
 			"Desired state of runit service.",
 			labelNames, constLabels,
 		), prometheus.GaugeValue},
 		stateNormal: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "normal_state"),
+			prometheus.BuildFQName(Namespace, subsystem, "normal_state"),
 			"Normal state of runit service.",
 			labelNames, constLabels,
 		), prometheus.GaugeValue},
 		stateTimestamp: typedDesc{prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, subsystem, "state_last_change_timestamp_seconds"),
+			prometheus.BuildFQName(Namespace, subsystem, "state_last_change_timestamp_seconds"),
 			"Unix timestamp of the last runit service state change.",
 			labelNames, constLabels,
 		), prometheus.GaugeValue},

@@ -30,7 +30,7 @@ type lnstatCollector struct {
 }
 
 func init() {
-	registerCollector("lnstat", defaultDisabled, NewLnstatCollector)
+	RegisterCollector("lnstat", DefaultDisabled, NewLnstatCollector)
 }
 
 func NewLnstatCollector(logger log.Logger) (Collector, error) {
@@ -59,7 +59,7 @@ func (c *lnstatCollector) Update(ch chan<- prometheus.Metric) error {
 				labelValues := []string{netStatFile.Filename, strconv.Itoa(cpu)}
 				ch <- prometheus.MustNewConstMetric(
 					prometheus.NewDesc(
-						prometheus.BuildFQName(namespace, subsystem, header+"_total"),
+						prometheus.BuildFQName(Namespace, subsystem, header+"_total"),
 						"linux network cache stats",
 						labelNames, nil,
 					),

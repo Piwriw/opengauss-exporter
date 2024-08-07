@@ -34,7 +34,7 @@ type dmiCollector struct {
 }
 
 func init() {
-	registerCollector("dmi", defaultEnabled, NewDMICollector)
+	RegisterCollector("dmi", DefaultEnabled, NewDMICollector)
 }
 
 // NewDMICollector returns a new Collector exposing DMI information.
@@ -86,7 +86,7 @@ func NewDMICollector(logger log.Logger) (Collector, error) {
 	// Construct DMI metric only once since it will not change until the next reboot.
 	return &dmiCollector{
 		infoDesc: prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, "dmi", "info"),
+			prometheus.BuildFQName(Namespace, "dmi", "info"),
 			"A metric with a constant '1' value labeled by bios_date, bios_release, bios_vendor, bios_version, "+
 				"board_asset_tag, board_name, board_serial, board_vendor, board_version, chassis_asset_tag, "+
 				"chassis_serial, chassis_vendor, chassis_version, product_family, product_name, product_serial, "+

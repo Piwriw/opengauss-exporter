@@ -31,7 +31,7 @@ type interruptsCollector struct {
 }
 
 func init() {
-	registerCollector("interrupts", defaultDisabled, NewInterruptsCollector)
+	RegisterCollector("interrupts", DefaultDisabled, NewInterruptsCollector)
 }
 
 var (
@@ -44,7 +44,7 @@ var (
 func NewInterruptsCollector(logger log.Logger) (Collector, error) {
 	return &interruptsCollector{
 		desc: typedDesc{prometheus.NewDesc(
-			namespace+"_interrupts_total",
+			Namespace+"_interrupts_total",
 			"Interrupt details.",
 			interruptLabelNames, nil,
 		), prometheus.CounterValue},

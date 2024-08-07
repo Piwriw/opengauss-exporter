@@ -37,7 +37,7 @@ type memoryCollector struct {
 }
 
 func init() {
-	registerCollector("meminfo", defaultEnabled, NewMemoryCollector)
+	RegisterCollector("meminfo", DefaultEnabled, NewMemoryCollector)
 }
 
 // NewMemoryCollector returns a new Collector exposing memory stats.
@@ -160,7 +160,7 @@ func (c *memoryCollector) Update(ch chan<- prometheus.Metric) error {
 
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, memorySubsystem, m.name),
+				prometheus.BuildFQName(Namespace, memorySubsystem, m.name),
 				m.description,
 				nil, nil,
 			), m.valueType, v)
@@ -173,7 +173,7 @@ func (c *memoryCollector) Update(ch chan<- prometheus.Metric) error {
 
 	ch <- prometheus.MustNewConstMetric(
 		prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, memorySubsystem, "swap_used_bytes"),
+			prometheus.BuildFQName(Namespace, memorySubsystem, "swap_used_bytes"),
 			"Currently allocated swap",
 			nil, nil,
 		), prometheus.GaugeValue, float64(swapUsed*c.pageSize))

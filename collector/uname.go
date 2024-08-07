@@ -23,7 +23,7 @@ import (
 )
 
 var unameDesc = prometheus.NewDesc(
-	prometheus.BuildFQName(namespace, "uname", "info"),
+	prometheus.BuildFQName(Namespace, "uname", "info"),
 	"Labeled system information as provided by the uname system call.",
 	[]string{
 		"sysname",
@@ -49,7 +49,7 @@ type uname struct {
 }
 
 func init() {
-	registerCollector("uname", defaultEnabled, newUnameCollector)
+	RegisterCollector("uname", DefaultEnabled, newUnameCollector)
 }
 
 // NewUnameCollector returns new unameCollector.

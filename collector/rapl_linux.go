@@ -39,7 +39,7 @@ type raplCollector struct {
 }
 
 func init() {
-	registerCollector(raplCollectorSubsystem, defaultEnabled, NewRaplCollector)
+	RegisterCollector(raplCollectorSubsystem, DefaultEnabled, NewRaplCollector)
 }
 
 var (
@@ -55,7 +55,7 @@ func NewRaplCollector(logger log.Logger) (Collector, error) {
 	}
 
 	joulesMetricDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, raplCollectorSubsystem, "joules_total"),
+		prometheus.BuildFQName(Namespace, raplCollectorSubsystem, "joules_total"),
 		"Current RAPL value in joules",
 		[]string{"index", "path", "rapl_zone"}, nil,
 	)
@@ -109,7 +109,7 @@ func (c *raplCollector) joulesMetric(z sysfs.RaplZone, v float64) prometheus.Met
 	index := strconv.Itoa(z.Index)
 	descriptor := prometheus.NewDesc(
 		prometheus.BuildFQName(
-			namespace,
+			Namespace,
 			raplCollectorSubsystem,
 			fmt.Sprintf("%s_joules_total", SanitizeMetricName(z.Name)),
 		),

@@ -45,7 +45,7 @@ type diskstatsCollector struct {
 }
 
 func init() {
-	registerCollector("diskstats", defaultEnabled, NewDiskstatsCollector)
+	RegisterCollector("diskstats", DefaultEnabled, NewDiskstatsCollector)
 }
 
 // NewDiskstatsCollector returns a new Collector exposing disk device stats.

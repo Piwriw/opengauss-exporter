@@ -132,7 +132,7 @@ func (c *powerSupplyClassCollector) Update(ch chan<- prometheus.Metric) error {
 		}
 
 		fieldDesc := prometheus.NewDesc(
-			prometheus.BuildFQName(namespace, c.subsystem, "info"),
+			prometheus.BuildFQName(Namespace, c.subsystem, "info"),
 			"info of /sys/class/power_supply/<power_supply>.",
 			keys,
 			nil,
@@ -146,7 +146,7 @@ func (c *powerSupplyClassCollector) Update(ch chan<- prometheus.Metric) error {
 
 func pushPowerSupplyMetric(ch chan<- prometheus.Metric, subsystem string, name string, value float64, powerSupplyName string, valueType prometheus.ValueType) {
 	fieldDesc := prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, subsystem, name),
+		prometheus.BuildFQName(Namespace, subsystem, name),
 		fmt.Sprintf("%s value of /sys/class/power_supply/<power_supply>.", name),
 		[]string{"power_supply"},
 		nil,

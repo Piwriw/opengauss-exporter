@@ -32,7 +32,7 @@ const (
 )
 
 func init() {
-	registerCollector("zfs", defaultEnabled, NewZfsCollector)
+	RegisterCollector("zfs", DefaultEnabled, NewZfsCollector)
 }
 
 func NewZfsCollector(logger log.Logger) (Collector, error) {
@@ -279,7 +279,7 @@ func (c *zfsCollector) Update(ch chan<- prometheus.Metric) error {
 
 		ch <- prometheus.MustNewConstMetric(
 			prometheus.NewDesc(
-				prometheus.BuildFQName(namespace, zfsCollectorSubsystem, m.name),
+				prometheus.BuildFQName(Namespace, zfsCollectorSubsystem, m.name),
 				m.description,
 				nil, nil,
 			), m.valueType, v)
