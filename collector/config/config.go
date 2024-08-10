@@ -3,7 +3,10 @@
 package config
 
 import (
+	"database/sql"
 	"fmt"
+	"github.com/blang/semver"
+	"github.com/prometheus/node_exporter/collector/utils"
 	"golang.org/x/exp/slog"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -13,6 +16,17 @@ import (
 )
 
 var MetricMap = make(map[string]*QueryInstance)
+
+// var DBHandler *sql.DB
+var DBMap = make(map[string]GBInfo)
+
+func GetDBConnection(address string, port int) *sql.DB {
+	return DBMap[fmt.Sprintf("%s:%d", address, port)].Connection
+}
+
+func GetDBVersion(address string, port int) string {
+	return DBMap[fmt.Sprintf("%s:%d", address, port)].Version
+}
 
 func InitConfig(configPath string) error {
 	var err error
@@ -98,4 +112,36 @@ func ParseConfig(content []byte, path string) (queries map[string]*QueryInstance
 
 	}
 	return
+}
+
+// getBaseInfo 查询数据库基本信息
+// 1. 版本
+// 2. 客户端编码
+// 3. 恢复模式
+func GetBaseInfo(db *sql.DB) (semver.Version, error) {
+	//if err := s.CheckConn(); err != nil {
+	//	return err
+	//}
+	if err := db.Ping(); err != nil {
+		return semver.Version{}, err
+	}
+	var (
+		versionString, clientEncoding, currentDatabase string
+		b                                              bool
+	)
+	sqlText := "SELECT version(),current_setting('client_encoding'),pg_is_in_recovery(),current_database()"
+	err := db.QueryRow(sqlText).Scan(&versionString, &clientEncoding, &b, &currentDatabase)
+	if err != nil {
+		return semver.ParseTolerant("0.0.0")
+	}
+	//p.primary = !b
+	//p.clientEncoding = clientEncoding
+	semanticVersion, err := utils.ParseVersionSem(versionString)
+	if err != nil {
+		slog.Warn("Error parsing version string ", slog.Any("error", err))
+		semanticVersion, err = semver.ParseTolerant("0.0.0")
+	}
+	//s.lastMapVersion = semanticVersion
+	//s.dbName = currentDatabase
+	return semanticVersion, err
 }

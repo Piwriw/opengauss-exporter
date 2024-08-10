@@ -18,7 +18,18 @@ func getMetric(ctx context.Context, db *sql.DB, queryInstance *config.QueryInsta
 	var list [][]interface{}
 
 	for _, query := range queryInstance.Queries {
+		if query.Status == "disable" {
+			continue
+		}
 		rows, err := db.QueryContext(ctx, query.SQL)
+		if err != nil {
+			slog.Error("db Query is failed", slog.Any("err", err))
+			continue
+		}
+		if rows == nil {
+			slog.Warn("rows is empty")
+			continue
+		}
 		columnNames, err = rows.Columns()
 		for rows.Next() {
 			var columnData = make([]interface{}, len(columnNames))
@@ -73,7 +84,7 @@ func procRows(queryInstance *config.QueryInstance, columnNames []string, columnI
 	// converted to float64s. NULLs are allowed and treated as NaN.
 	for idx, columnName := range columnNames {
 		//col := queryInstance.GetColumn(columnName, s.labels)
-		col := queryInstance.GetColumn(columnName, nil)
+		col := queryInstance.GetColumn(columnName, prometheus.Labels{"server": fmt.Sprintf("%s:%d", config.MonitDB.Address, config.MonitDB.Port)})
 		metric, err := newMetric(queryInstance, col, columnName, columnData[idx], labels)
 		if err != nil {
 			slog.Error("newMetric", slog.Any("err", err))
@@ -121,7 +132,7 @@ func newMetric(queryInstance *config.QueryInstance, col *config.Column, columnNa
 
 func decode(queryInstance *config.QueryInstance, data interface{}, label, dbName string) (string, error) {
 	v, _ := utils.DbToString(data, false)
-	col := queryInstance.GetColumn(label, nil)
+	col := queryInstance.GetColumn(label, prometheus.Labels{"server": fmt.Sprintf("%s:%d", config.MonitDB.Address, config.MonitDB.Port)})
 	if col == nil {
 		return v, nil
 	}

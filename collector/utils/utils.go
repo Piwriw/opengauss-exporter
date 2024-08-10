@@ -101,7 +101,7 @@ func parseCSV(s string) (tags []string) {
 	return
 }
 
-func parseVersionSem(versionString string) (semver.Version, error) {
+func ParseVersionSem(versionString string) (semver.Version, error) {
 	version := parseVersion(versionString)
 	if version != "" {
 		return semver.ParseTolerant(version)

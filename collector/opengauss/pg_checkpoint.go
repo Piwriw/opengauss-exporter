@@ -11,19 +11,19 @@ import (
 	"github.com/prometheus/node_exporter/collector/config"
 )
 
-type pgDataBaseCollector struct {
+type pgCheckPointCollector struct {
 	logger log.Logger
 	db     *sql.DB
 }
 
-func (p *pgDataBaseCollector) name() string {
-	return "pg_database"
+func (p *pgCheckPointCollector) name() string {
+	return "pg_checkpoint"
 }
 
-func (p *pgDataBaseCollector) Update(ch chan<- prometheus.Metric) error {
+func (p *pgCheckPointCollector) Update(ch chan<- prometheus.Metric) error {
 	queryInstance, ok := config.MetricMap[p.name()]
 	if !ok {
-		return fmt.Errorf("can not find pg_database from MetricMap")
+		return fmt.Errorf("can not find pg_checkpoint from MetricMap")
 	}
 
 	if err := queryInstance.Check(); err != nil {
@@ -37,13 +37,13 @@ func (p *pgDataBaseCollector) Update(ch chan<- prometheus.Metric) error {
 }
 
 func init() {
-	collector.RegisterCollector("pg_database", collector.DefaultEnabled, NewPGDataBaseCollector)
+	collector.RegisterCollector("pg_checkpoint", collector.DefaultEnabled, NewpgCheckPointCollector)
 }
 
-func NewPGDataBaseCollector(logger log.Logger) (collector.Collector, error) {
+func NewpgCheckPointCollector(logger log.Logger) (collector.Collector, error) {
 	//db, err := gorm.Open(postgres.Open("postgresql://gaussdb:Enmo@123@47.107.113.111:15432/postgres"), &gorm.Config{})
 
-	return &pgDataBaseCollector{
+	return &pgCheckPointCollector{
 		db:     config.GetDBConnection(config.MonitDB.Address, config.MonitDB.Port),
 		logger: logger,
 	}, nil

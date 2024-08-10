@@ -15,6 +15,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"github.com/prometheus/common/version"
 	"github.com/prometheus/node_exporter/collector/config"
@@ -286,6 +287,34 @@ func initArgs(args *Args) {
 	//log.AddFlags(kingpin.CommandLine)
 }
 
+func initDBConfig() (err error) {
+	config.MonitDB = &config.GaussDBConnectConfig{
+		Address:  "47.107.113.111",
+		Port:     15432,
+		Username: "gaussdb",
+		Password: "Enmo@123",
+		Database: "omm",
+	}
+	dsn := fmt.Sprintf("postgresql://%s:%s@%s:%d/%s?sslmode=disable", config.MonitDB.Username, config.MonitDB.Password, config.MonitDB.Address, config.MonitDB.Port, config.MonitDB.Database)
+	//config.DBHandler, err = sql.Open("postgres", "postgresql://gaussdb:Enmo@123@47.107.113.111:15432/omm?sslmode=disable")
+	db, err := sql.Open("postgres", dsn)
+	if err != nil {
+		return err
+	}
+	mapId := fmt.Sprintf("%s:%d", config.MonitDB.Address, config.MonitDB.Port)
+	version, err := config.GetBaseInfo(db)
+	if err != nil {
+		return err
+	}
+	gbinfo := config.GBInfo{
+		Version:              version.String(),
+		Connection:           db,
+		GaussDBConnectConfig: config.MonitDB,
+	}
+	config.DBMap[mapId] = gbinfo
+	return
+}
+
 func main() {
 	if err := config.InitConfig("./default_all.yml"); err != nil {
 		slog.Error("Init Config failed", slog.Any("error", err))
@@ -300,6 +329,10 @@ func main() {
 	kingpin.CommandLine.UsageWriter(os.Stdout)
 	kingpin.HelpFlag.Short('h')
 	kingpin.Parse()
+	if err := initDBConfig(); err != nil {
+		slog.Error("Init DB Config failed", slog.Any("error", err))
+		panic(err)
+	}
 	logger := promlog.New(promlogConfig)
 	if *args.DisableDefaultCollectors {
 		collector.DisableDefaultCollectors()

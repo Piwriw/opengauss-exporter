@@ -11,19 +11,19 @@ import (
 	"github.com/prometheus/node_exporter/collector/config"
 )
 
-type pgDataBaseCollector struct {
+type pgSqlHistoryCollector struct {
 	logger log.Logger
 	db     *sql.DB
 }
 
-func (p *pgDataBaseCollector) name() string {
-	return "pg_database"
+func (p *pgSqlHistoryCollector) name() string {
+	return "pg_sql_history"
 }
 
-func (p *pgDataBaseCollector) Update(ch chan<- prometheus.Metric) error {
+func (p *pgSqlHistoryCollector) Update(ch chan<- prometheus.Metric) error {
 	queryInstance, ok := config.MetricMap[p.name()]
 	if !ok {
-		return fmt.Errorf("can not find pg_database from MetricMap")
+		return fmt.Errorf("can not find pg_replication_slots from MetricMap")
 	}
 
 	if err := queryInstance.Check(); err != nil {
@@ -37,13 +37,11 @@ func (p *pgDataBaseCollector) Update(ch chan<- prometheus.Metric) error {
 }
 
 func init() {
-	collector.RegisterCollector("pg_database", collector.DefaultEnabled, NewPGDataBaseCollector)
+	collector.RegisterCollector("pg_sql_history", collector.DefaultEnabled, NewpgSqlHistoryCollector)
 }
 
-func NewPGDataBaseCollector(logger log.Logger) (collector.Collector, error) {
-	//db, err := gorm.Open(postgres.Open("postgresql://gaussdb:Enmo@123@47.107.113.111:15432/postgres"), &gorm.Config{})
-
-	return &pgDataBaseCollector{
+func NewpgSqlHistoryCollector(logger log.Logger) (collector.Collector, error) {
+	return &pgSqlHistoryCollector{
 		db:     config.GetDBConnection(config.MonitDB.Address, config.MonitDB.Port),
 		logger: logger,
 	}, nil

@@ -1138,7 +1138,7 @@ pg:
       version: '>=0.0.0'
       timeout: 0.1
       ttl: 10
-      status: enable
+      status: disable
       dbRole: standby
   metrics:
     - name: timestamp
