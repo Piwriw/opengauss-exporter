@@ -28,6 +28,9 @@ MACH                    ?= $(shell uname -m)
 
 STATICCHECK_IGNORE =
 
+CI_COMMIT_SHORT_SHA ?= $(shell git rev-parse --short HEAD)
+CI_BUILD_REF_NAME ?= $(shell git rev-parse --abbrev-ref HEAD)
+
 ifeq ($(GOHOSTOS), linux)
 	test-e2e := test-e2e
 else
@@ -145,3 +148,8 @@ promtool: $(PROMTOOL)
 $(PROMTOOL):
 	mkdir -p $(FIRST_GOPATH)/bin
 	curl -fsS -L $(PROMTOOL_URL) | tar -xvzf - -C $(FIRST_GOPATH)/bin --strip 1 "prometheus-$(PROMTOOL_VERSION).$(GO_BUILD_PLATFORM)/promtool"
+
+build_dev:
+	 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build  -gcflags "all=-N -l" -ldflags '-extldflags "-static"' \
+     -ldflags "-X opengauss-exporter/version.Commit=${CI_COMMIT_SHORT_SHA} -X opengauss-exporter/version.Release=${CI_BUILD_REF_NAME}" \
+     -o opengauss-exporter-dev
